@@ -1,4 +1,13 @@
 package com.htw.vbbs.douban;
 
-public class Directors {
+import lombok.Data;
+import java.io.Serializable;
+import java.util.Map;
+
+@Data
+public class Directors implements Serializable {
+    private String alt;
+    private Map avatars;
+    private String name;
+    private String id;
 }

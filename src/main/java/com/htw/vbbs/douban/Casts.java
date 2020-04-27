@@ -1,4 +1,13 @@
 package com.htw.vbbs.douban;
 
-public class Casts {
+import lombok.Data;
+import java.io.Serializable;
+import java.util.Map;
+
+@Data
+public class Casts implements Serializable {
+    private String alt;
+    private Map avatars;
+    private String name;
+    private String id;
 }

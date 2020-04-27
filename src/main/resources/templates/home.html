@@ -1,250 +1,251 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Layui</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="layui/css/layui.css"  media="all">
-  <link rel="stylesheet" href="css/home.css"  media="all">
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"  media="all">
 </head>
-<body> 
+<body>
 <ul class="padd layui-nav">
-  <li class="layui-nav-item layui-this"><a href="">社区</a></li>
-  <li class="layui-nav-item">
-    <a href="javascript:;">电影</a>
-    <dl class="layui-nav-child">
-      <dd><a href="coming_movie.html">即将上映</a></dd>
-      <dd><a href="">高分电影</a></dd>
-      <dd><a href="">北美票房</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item">
-    <a href="javascript:;">音乐</a>
-    <dl class="layui-nav-child">
-      <dd><a href="">经典老歌</a></dd>
-      <dd><a href="">新歌榜单</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item"><a href="">游戏</a></li>
-  <div class="right-li">
-    <li class="layui-nav-item" lay-unselect="">
-      <a href="javascript:;"><img src="img/logo.jpg" class="layui-nav-img">我</a>
-      <dl class="layui-nav-child">
-        <dd><a href="javascript:;">修改信息</a></dd>
-        <dd><a href="javascript:;">安全管理</a></dd>
-        <dd><a href="javascript:;">退了</a></dd>
-      </dl>
+    <li class="layui-nav-item layui-this"><a href="">社区</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">电影</a>
+        <dl class="layui-nav-child">
+            <dd><a href="coming_movie.html">即将上映</a></dd>
+            <dd><a href="">高分电影</a></dd>
+            <dd><a href="">北美票房</a></dd>
+        </dl>
     </li>
-  </div>
+    <li class="layui-nav-item">
+        <a href="javascript:;">音乐</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">经典老歌</a></dd>
+            <dd><a href="">新歌榜单</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">游戏</a></li>
+    <div class="right-li">
+        <li class="layui-nav-item" lay-unselect="">
+            <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">修改信息</a></dd>
+                <dd><a href="javascript:;">安全管理</a></dd>
+                <dd><a href="javascript:;">退了</a></dd>
+            </dl>
+        </li>
+    </div>
 </ul>
 <div class="container">
-  <div class="main-container">
-    <div class="left-container">
-      <div class="layui-card">
-        <div class="high layui-card-header">
-          <ul class="white layui-nav">
-            <li class="black layui-nav-item layui-this"><a href="">最新</a></li>
-            <li class="black layui-nav-item"><a href="">交流</a></li>
-            <li class="black layui-nav-item"><a href="">电影说</a></li>
-            <li class="black layui-nav-item"><a href="">音乐说</a></li>
-            <li class="black layui-nav-item"><a href="">游戏说</a></li>
-            <li class="black layui-nav-item"><a href="">其他</a></li>
-          </ul>
-        </div>
-        <div class="layui-card-body">
-          <ul>
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
+    <div class="main-container">
+        <div class="left-container">
+            <div class="layui-card">
+                <div class="high layui-card-header">
+                    <ul class="white layui-nav">
+                        <li class="black layui-nav-item layui-this"><a href="">最新</a></li>
+                        <li class="black layui-nav-item"><a href="">交流</a></li>
+                        <li class="black layui-nav-item"><a href="">电影说</a></li>
+                        <li class="black layui-nav-item"><a href="">音乐说</a></li>
+                        <li class="black layui-nav-item"><a href="">游戏说</a></li>
+                        <li class="black layui-nav-item"><a href="">其他</a></li>
+                    </ul>
                 </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
+                <div class="layui-card-body">
+                    <ul>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
 
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="li-item">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="" title="搁浅~">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a>bbs-go 构建部署帮助</a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item">搁浅~</span>
+                                        <span class="meta-item">2020-04-17:10:23:23</span>
+                                        <span class="meta-item-type">交流</span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count">23</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
-                </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
-                </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
-                </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
-                </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
-            <li class="li-item">
-              <div class="li-item-header">
-                <div class="li-item-left">
-                  <a href="" title="搁浅~">
-                    <img src="img/logo.jpg" class="li-avatar">
-                  </a>
-                </div>
-                <div class="li-item-center">
-                  <h1 class="li-title">
-                    <a>bbs-go 构建部署帮助</a>
-                  </h1>
-                  <div class="li-meta">
-                    <span class="meta-item">搁浅~</span>
-                    <span class="meta-item">2020-04-17:10:23:23</span>
-                    <span class="meta-item-type">交流</span>
-                  </div>
-                </div>
-                <div class="li-item-right">
-                  <img src="img/zan.svg">
-                  <span class="zan-count">23</span>
-                </div>
-              </div>
-            </li>
-          </ul>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="right-container">
-      <div class="layui-card r-card">
-        <div class="layui-card-header">卡片面板</div>
-        <div class="layui-card-body">
-          卡片式面板面板通常用于非白色背景色的主体内<br>
-          从而映衬出边框投影
+        <div class="right-container">
+            <div class="layui-card r-card">
+                <div class="layui-card-header">卡片面板</div>
+                <div class="layui-card-body">
+                    卡片式面板面板通常用于非白色背景色的主体内<br>
+                    从而映衬出边框投影
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<script src="layui/layui.js" charset="utf-8"></script>
+<script th:src="@{/layui/layui.js}"></script>
 <script>
-layui.use('element', function(){
-  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-  
-  //监听导航点击
-  element.on('nav(demo)', function(elem){
-    //console.log(elem)
-    layer.msg(elem.text());
-  });
-});
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
 </script>
 
 </body>

@@ -63,5 +63,9 @@ public class DemoController {
         return Result.success(true);
     }
 
+    @RequestMapping("/home")
+    public String tohome() {
+        return "home";
+    }
 }
 
