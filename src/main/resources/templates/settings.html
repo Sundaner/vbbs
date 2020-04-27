@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="css/home.css"  media="all">
+  <style type="text/css">
+    .line-width {
+      width: 450px;
+      margin-left: 0;
+      float: left;
+    }
+    .img-size {
+      width: 150px;
+      height: 150px;
+    }
+  </style>
+</head>
+<body> 
+<ul class="padd layui-nav">
+  <li class="layui-nav-item"><a href="home.html">社区</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">电影</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">即将上映</a></dd>
+      <dd><a href="">高分电影</a></dd>
+      <dd><a href="">北美票房</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">音乐</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">经典老歌</a></dd>
+      <dd><a href="">新歌榜单</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="">游戏</a></li>
+  <div class="right-li">
+    <li class="layui-nav-item" lay-unselect="">
+      <a href="javascript:;"><img src="img/logo.jpg" class="layui-nav-img">我</a>
+      <dl class="layui-nav-child">
+        <dd><a href="javascript:;">修改信息</a></dd>
+        <dd><a href="javascript:;">安全管理</a></dd>
+        <dd><a href="javascript:;">退了</a></dd>
+      </dl>
+    </li>
+  </div>
+</ul>
+<div class="container">
+  <div class="main-container">
+    <div class="left-container">
+      <div class="layui-card">
+        <div class="layui-card-header">
+          <span>编辑资料</span>
+        </div>
+        <div class="layui-card-body">
+          <form class="layui-form" action="">
+            <div class="layui-form-item">
+              <label class="layui-form-label">昵称</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">电话号码</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">地址</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">生日</label>
+              <div class="layui-inline">
+                <input type="text" class="layui-input" id="test1">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">头像</label>
+              <div class="layui-input-block">
+                <img src="img/avatar.png" class="img-size">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button class="layui-btn">上传头像</button>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">个性签名</label>
+              <div class="layui-input-block layui-inline line-width">
+                <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">用一句话来描述下自己！</div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">个人标签</label>
+              <div class="layui-input-block">
+                <input type="checkbox" name="like[movie]" title="电影">
+                <input type="checkbox" name="like[music]" title="音乐" checked>
+                <input type="checkbox" name="like[game]" title="游戏">
+              </div>
+            </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">性别</label>
+              <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男">
+                <input type="radio" name="sex" value="女" title="女" checked>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-container">
+      <div class="layui-card r-card">
+        <div class="layui-card-header">卡片面板</div>
+        <div class="layui-card-body">
+          卡片式面板面板通常用于非白色背景色的主体内<br>
+          从而映衬出边框投影
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="jquery-3.3.1.js"></script>
+<script src="wangEditor/release/wangEditor.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+  layui.use('element', function(){
+    var element = layui.element; 
+    //监听导航点击
+    element.on('nav(demo)', function(elem){
+      layer.msg(elem.text());
+    });
+  });
+  layui.use('form', function () {
+    var form = layui.form; 
+    form.render();
+  });      
+  layui.use('laydate', function(){
+    var laydate = layui.laydate;
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#test1', //指定元素
+      trigger: 'click'
+    });
+  });
+</script>
+</body>
+</html>

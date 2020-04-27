@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="css/home.css"  media="all">
+  <style type="text/css">
+    .edit.layui-input-block{
+      margin-left: 10px;
+    }
+    .inline-long1 {
+      width: 620px; 
+    }
+    .inline-long2 {
+      width: 105px; 
+      margin: 0
+    }
+    .mar-top {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body> 
+<ul class="padd layui-nav">
+  <li class="layui-nav-item"><a href="home.html">社区</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">电影</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">即将上映</a></dd>
+      <dd><a href="">高分电影</a></dd>
+      <dd><a href="">北美票房</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">音乐</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">经典老歌</a></dd>
+      <dd><a href="">新歌榜单</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="">游戏</a></li>
+  <div class="right-li">
+    <li class="layui-nav-item" lay-unselect="">
+      <a href="javascript:;"><img src="img/logo.jpg" class="layui-nav-img">我</a>
+      <dl class="layui-nav-child">
+        <dd><a href="javascript:;">修改信息</a></dd>
+        <dd><a href="javascript:;">安全管理</a></dd>
+        <dd><a href="javascript:;">退了</a></dd>
+      </dl>
+    </li>
+  </div>
+</ul>
+<div class="container">
+  <div class="main-container">
+    <div class="left-container">
+      <div class="layui-card">
+        <div class="layui-card-header">
+          <span>发布帖子</span>
+        </div>
+        <div class="layui-card-body">
+          <form class="layui-form" action="">
+            <div class="layui-form-item">
+              <div class="edit layui-input-block layui-inline inline-long1">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+              </div>
+              <div class="edit layui-input-block layui-inline inline-long2">
+                <select name="city" lay-verify="required">
+                  <option value=""></option>
+                  <option value="0">交流</option>
+                  <option value="1">电影说</option>
+                  <option value="2">音乐说</option>
+                  <option value="3">游戏说</option>
+                  <option value="4">其他</option>
+                </select>
+              </div>
+            </div>
+            <div id = "edit"></div>
+            <div class="layui-form-item">
+              <div class="edit layui-input-block mar-top">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-container">
+      <div class="layui-card">
+        <div class="layui-card-header">卡片面板</div>
+        <div class="layui-card-body">
+          卡片式面板面板通常用于非白色背景色的主体内<br>
+          从而映衬出边框投影
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="jquery-3.3.1.js"></script>
+<script src="wangEditor/release/wangEditor.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+  layui.use('element', function(){
+    var element = layui.element; 
+    
+    //监听导航点击
+    element.on('nav(demo)', function(elem){
+      layer.msg(elem.text());
+    });
+  });
+  layui.use('form', function () {
+    var form = layui.form; 
+    form.render();
+  });      
+
+  var editor;
+    $(document).ready(function () {
+      var E = window.wangEditor
+      editor = new E('#edit') // 隐藏“网络图片”tab
+      editor.customConfig.showLinkImg = false
+      editor.customConfig.menus = [ //菜单
+        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'fontName',  // 字体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'link',  // 插入链接
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'quote',  // 引用
+        'emoticon',  // 表情
+        'image',  // 插入图片
+        'table',  // 表格
+        'video',  // 插入视频
+        'code',  // 插入代码
+        'undo',  // 撤销
+        'redo'  // 重复
+      ]
+      editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
+      editor.customConfig.uploadImgServer = '/upload';
+      editor.customConfig.uploadFileName = 'imageFile'; //与后台获取文件名相同
+      editor.customConfig.linkImgCallback = function (url) {
+        console.log(url) // url 即插入图片的地址
+      }
+      editor.customConfig.uploadImgHooks = {
+        before: function (xhr, editor, files) {
+
+        },
+        success: function (xhr, editor, result) {
+
+        },
+        fail: function (xhr, editor, result) {
+
+        },
+        error: function (xhr, editor) {
+
+        },
+        timeout: function (xhr, editor) {
+
+        },
+
+        customInsert: function (insertImg, result, editor) {
+          var url = result.url
+          insertImg(url)
+        }
+      }
+      editor.create()
+
+      document.getElementById('btn1').addEventListener('click', function () {
+        // 读取 html
+        alert(editor.txt.html())
+        console.log(editor.txt.html())
+      }, false)
+    })
+</script>
+</body>
+</html>
