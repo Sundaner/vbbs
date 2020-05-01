@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
-public class HttpUtils {
+public class HttpUtil {
 
     public static String httpRequst(String strUrlPath, Map<String, String> params, String encode, String action) {
 

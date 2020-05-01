@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <style type="text/css">
+        .m-title{
+            width: 70%;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+        .movie-soon{
+            display: flex;
+            flex: 1;
+            margin: 0 auto;
+            position: relative;
+            width: 70%;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        .movie-soon-left {
+            display: flex;
+            width: 80%;
+        }
+        .intro {
+            margin-left: 15px;
+        }
+        .info-img-size {
+            width: 140px;
+            height: 190px;
+        }
+        .li-padd {
+            padding: 3px 0 4px 8px;
+        }
+        .brief{
+            width: 70%;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+        .p-indent {
+            text-indent: 2em;
+            margin-top: 15px;
+        }
+        .photos{
+            display: flex;
+            width: 70%;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+        .per-photo{
+            width: 95px;
+            height: 130px;
+            margin-right: 40px;
+        }
+        .per-name {
+            position: absolute;
+            width: 95px;
+            text-align:center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+    </style>
+</head>
+<body>
+<ul class="padd layui-nav">
+    <li class="layui-nav-item"><a href="home.html">社区</a></li>
+    <li class="layui-nav-item layui-this">
+        <a href="javascript:;">电影</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">即将上映</a></dd>
+            <dd><a href="">高分电影</a></dd>
+            <dd><a href="">北美票房</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">音乐</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">经典老歌</a></dd>
+            <dd><a href="">新歌榜单</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">游戏</a></li>
+    <div class="right-li">
+        <li class="layui-nav-item" lay-unselect="">
+            <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">修改信息</a></dd>
+                <dd><a href="javascript:;">安全管理</a></dd>
+                <dd><a href="javascript:;">退了</a></dd>
+            </dl>
+        </li>
+    </div>
+</ul>
+<div class="container">
+    <div class="main-container">
+        <div class="left-container">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span>电影 / 电影详情</span>
+                </div>
+                <div class="layui-card-body">
+                    <div class="m-title">
+                        <h1>
+                            <span th:text="${movie.title}">title</span>
+                            <span th:text="'('+${movie.year}+')'"></span>
+                        </h1>
+                    </div>
+                    <div class="movie-soon">
+                        <div class="movie-soon-left">
+                            <a href="">
+                                <img th:src="${movie.img}" class="info-img-size">
+                            </a>
+                            <div class="intro">
+                                <ul>
+                                    <li class="li-item li-padd">
+                                        <span>导演：</span>
+                                        <span th:text="${movie.directors}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>编剧：</span>
+                                        <span th:text="${movie.writers}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>主演：</span>
+                                        <span th:text="${movie.castsNames}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>类型：</span>
+                                        <span th:text="${movie.genres}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>上映时间：</span>
+                                        <span th:text="${movie.pubdates}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>豆瓣评分：</span>
+                                        <span th:text="${movie.avg}"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="brief">
+                        <h2>剧情简介</h2>
+                        <p class="p-indent" th:text="${movie.summary}"></p>
+                    </div>
+                    <div class="brief">
+                        <h2>相关演员</h2>
+                    </div>
+                    <div class="photos">
+                        <div th:each="p:${movie.casts}">
+                            <img th:src="${p.avatars.get('small')}" class="per-photo">
+                            <a href="#" th:title="${p.name}">
+                                <span th:text="${p.name}" class="per-name"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="layui-card">
+                <div class="layui-card-header">卡片面板</div>
+                <div class="layui-card-body">
+                    卡片式面板面板通常用于非白色背景色的主体内<br>
+                    从而映衬出边框投影
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+</script>
+
+</body>
+</html>

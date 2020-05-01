@@ -82,12 +82,12 @@
                     <div th:each="i:${#numbers.sequence(0, length-2, 2)}">
                         <div class="movie-soon">
                             <div class="movie-soon-left">
-                                <a href="">
+                                <a th:href="'/movie/info?id='+${movies[i].id}">
                                     <img th:src="${movies[i].img}" class="img-size">
                                 </a>
                                 <div class="intro">
                                     <h3>
-                                        <a href="" th:text="${movies[i].title}">title</a>
+                                        <a th:href="'/movie/info?id='+${movies[i].id}" th:text="${movies[i].title}">title</a>
                                     </h3>
                                     <ul class="ul-top">
                                         <li th:text="${movies[i].pubdate}">pubdate</li>
@@ -96,12 +96,12 @@
                                 </div>
                             </div>
                             <div class="movie-soon-right" th:if="${movies[i+1]} ne null">
-                                <a href="">
+                                <a th:href="'/movie/info?id='+${movies[i+1].id}">
                                     <img th:src="${movies[i+1].img}" class="img-size">
                                 </a>
                                 <div class="intro">
                                     <h3>
-                                        <a href="" th:text="${movies[i+1].title}">title</a>
+                                        <a th:href="'/movie/info?id='+${movies[i+1].id}" th:text="${movies[i+1].title}">title</a>
                                     </h3>
                                     <ul class="ul-top">
                                         <li th:text="${movies[i+1].pubdate}">pubdate</li>

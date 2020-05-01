@@ -10,41 +10,57 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
     <style type="text/css">
-        .movie-soon{
+        .music-rank{
             display: flex;
             flex: 1;
             margin: 0 auto;
             position: relative;
-            width: 80%;
+            width: 96%;
+            padding-top: 20px;
             padding-bottom: 20px;
-            margin-bottom: 20px;
             border-bottom: 1px solid #f2f2f2;
         }
-        .movie-soon-left {
+        .music-rank-left {
             display: flex;
-            width: 60%;
+            width: 50%;
+            border-left: 1px solid #f2f2f2;
         }
-        .movie-soon-right {
+        .music-rank-right {
             display: flex;
             flex: 1;
             width: 50%;
+            border-left: 1px solid #f2f2f2;
         }
         .intro {
             margin-left: 15px;
         }
-        .ul-top {
+        .music-ol{
             margin-top: 20px;
+            margin-left: 15px;
         }
-        .img-size {
+        .m-span-left {
+            padding-left: 10px;
+            width: 150px;
+            float: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .m-span-right {
+            padding-left: 10px;
             width: 100px;
-            height: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .li-a {
+            color: blue;
         }
     </style>
 </head>
 <body>
 <ul class="padd layui-nav">
     <li class="layui-nav-item"><a href="home.html">社区</a></li>
-    <li class="layui-nav-item layui-this">
+    <li class="layui-nav-item">
         <a href="javascript:;">电影</a>
         <dl class="layui-nav-child">
             <dd><a href="">即将上映</a></dd>
@@ -59,7 +75,7 @@
             <dd><a href="">新歌榜单</a></dd>
         </dl>
     </li>
-    <li class="layui-nav-item"><a href="">游戏</a></li>
+    <li class="layui-nav-item "><a href="">游戏</a></li>
     <div class="right-li">
         <li class="layui-nav-item" lay-unselect="">
             <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
@@ -76,42 +92,41 @@
         <div class="left-container">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    <span>电影 / 高分票房</span>
+                    <span>音乐 / 音乐榜单（每周更新一次）</span>
                 </div>
                 <div class="layui-card-body">
-                    <div th:each="i:${#numbers.sequence(0, length-2, 2)}">
-                        <div class="movie-soon">
-                            <div class="movie-soon-left">
-                                <a th:href="'/movie/info?id='+${movies[i].id}">
-                                    <img th:src="${movies[i].img}" class="img-size">
-                                </a>
-                                <div class="intro">
-                                    <h3>
-                                        <a th:href="'/movie/info?id='+${movies[i].id}" th:text="${movies[i].title}">title</a>
-                                    </h3>
-                                    <ul class="ul-top">
-                                        <li th:text="${movies[i].pubdate}">pubdate</li>
-                                        <li th:text="${movies[i].genres}">genres</li>
-                                    </ul>
-                                </div>
+                    <div class="music-rank" th:each="i:${#numbers.sequence(0, length-2, 2)}">
+                        <div class="music-rank-left">
+                            <div class="intro">
+                                <h2 th:text="${rank[i].name}"></h2>
+                                <ol class="music-ol">
+                                    <li style="list-style: decimal;" th:each="b:${rank[i].content}">
+                                        <a th:href="'/music/detail?type='+${rank[i].type}+'&id='+${b.song_id}" class="li-a" th:title="${b.title}">
+                                            <span class="m-span-left" th:text="${b.title}"></span>
+                                        </a>
+                                        <a th:title="${b.author}">
+                                            <span class="m-span-right" th:text="${b.author}"></span>
+                                        </a>
+                                    </li>
+                                </ol>
                             </div>
-                            <div class="movie-soon-right" th:if="${movies[i+1]} ne null">
-                                <a th:href="'/movie/info?id='+${movies[i+1].id}">
-                                    <img th:src="${movies[i+1].img}" class="img-size">
-                                </a>
-                                <div class="intro">
-                                    <h3>
-                                        <a th:href="'/movie/info?id='+${movies[i+1].id}" th:text="${movies[i+1].title}">title</a>
-                                    </h3>
-                                    <ul class="ul-top">
-                                        <li th:text="${movies[i+1].pubdate}">pubdate</li>
-                                        <li th:text="${movies[i+1].genres}">genres</li>
-                                    </ul>
-                                </div>
+                        </div>
+                        <div class="music-rank-right" class="img-size">
+                            <div class="intro">
+                                <h2 th:text="${rank[i+1].name}"></h2>
+                                <ol class="music-ol">
+                                    <li style="list-style: decimal;" th:each="c:${rank[i+1].content}">
+                                        <a th:href="'/music/detail?type='+${rank[i+1].type}+'&id='+${c.song_id}" class="li-a" th:title="${c.title}">
+                                            <span class="m-span-left" th:text="${c.title}"></span>
+                                        </a>
+                                        <a th:title="${c.author}">
+                                            <span class="m-span-right" th:text="${c.author}"></span>
+                                        </a>
+                                    </li>
+                                </ol>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

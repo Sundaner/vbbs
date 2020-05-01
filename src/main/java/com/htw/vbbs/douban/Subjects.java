@@ -4,6 +4,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 public class Subjects implements Serializable {
@@ -12,7 +13,7 @@ public class Subjects implements Serializable {
     private String title;
     private ArrayList<Casts> casts;
     private int collect_count;
-    private String mainland_pubdate;
+    private List<String> pubdates;
     private String original_title;
     private String subtype;
     private ArrayList<Directors> directors;

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.htw.vbbs.dao.GameMapper">
+    <resultMap id="ResultMap" type="com.htw.vbbs.domain.Game">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="imgurl" property="imgurl" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="platforms" property="platforms" jdbcType="VARCHAR"/>
+        <result column="alias" property="alias" jdbcType="VARCHAR"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="pubdates" property="pubdates" jdbcType="VARCHAR"/>
+        <result column="avg" property="avg" jdbcType="FLOAT"/>
+        <result column="summary" property="summary" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+       id,imgurl,title,type,platforms,alias,company,pubdates,avg,summary
+    </sql>
+
+    <select id="queryGamePage" resultMap="ResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from game
+        order by avg DESC, id
+        limit #{offset}, #{pageSize}
+    </select>
+
+    <select id="queryGameById" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from game
+        where id = #{id}
+    </select>
+
+    <select id="getGameList" resultMap="ResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from game
+        order by avg DESC
+    </select>
+
+</mapper>

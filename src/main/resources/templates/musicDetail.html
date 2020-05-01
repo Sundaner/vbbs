@@ -10,41 +10,43 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
     <style type="text/css">
+        .m-title{
+            width: 70%;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
         .movie-soon{
             display: flex;
             flex: 1;
             margin: 0 auto;
             position: relative;
-            width: 80%;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+            width: 70%;
             border-bottom: 1px solid #f2f2f2;
         }
         .movie-soon-left {
             display: flex;
-            width: 60%;
-        }
-        .movie-soon-right {
-            display: flex;
-            flex: 1;
-            width: 50%;
         }
         .intro {
             margin-left: 15px;
         }
-        .ul-top {
-            margin-top: 20px;
+        .musicinfo-img-size {
+            width: 200px;
+            height: 200px;
         }
-        .img-size {
-            width: 100px;
-            height: 150px;
+        .li-padd {
+            padding: 3px 0 4px 8px;
+        }
+        .music-brief{
+            width: 70%;
+            margin: 0 auto;
+            white-space: pre-line;
         }
     </style>
 </head>
 <body>
 <ul class="padd layui-nav">
     <li class="layui-nav-item"><a href="home.html">社区</a></li>
-    <li class="layui-nav-item layui-this">
+    <li class="layui-nav-item">
         <a href="javascript:;">电影</a>
         <dl class="layui-nav-child">
             <dd><a href="">即将上映</a></dd>
@@ -52,7 +54,7 @@
             <dd><a href="">北美票房</a></dd>
         </dl>
     </li>
-    <li class="layui-nav-item">
+    <li class="layui-nav-item layui-this">
         <a href="javascript:;">音乐</a>
         <dl class="layui-nav-child">
             <dd><a href="">经典老歌</a></dd>
@@ -76,42 +78,48 @@
         <div class="left-container">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    <span>电影 / 高分票房</span>
+                    <span>电影 / 音乐详情</span>
                 </div>
                 <div class="layui-card-body">
-                    <div th:each="i:${#numbers.sequence(0, length-2, 2)}">
-                        <div class="movie-soon">
-                            <div class="movie-soon-left">
-                                <a th:href="'/movie/info?id='+${movies[i].id}">
-                                    <img th:src="${movies[i].img}" class="img-size">
-                                </a>
-                                <div class="intro">
-                                    <h3>
-                                        <a th:href="'/movie/info?id='+${movies[i].id}" th:text="${movies[i].title}">title</a>
-                                    </h3>
-                                    <ul class="ul-top">
-                                        <li th:text="${movies[i].pubdate}">pubdate</li>
-                                        <li th:text="${movies[i].genres}">genres</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="movie-soon-right" th:if="${movies[i+1]} ne null">
-                                <a th:href="'/movie/info?id='+${movies[i+1].id}">
-                                    <img th:src="${movies[i+1].img}" class="img-size">
-                                </a>
-                                <div class="intro">
-                                    <h3>
-                                        <a th:href="'/movie/info?id='+${movies[i+1].id}" th:text="${movies[i+1].title}">title</a>
-                                    </h3>
-                                    <ul class="ul-top">
-                                        <li th:text="${movies[i+1].pubdate}">pubdate</li>
-                                        <li th:text="${movies[i+1].genres}">genres</li>
-                                    </ul>
-                                </div>
+                    <div class="m-title">
+                        <h1>
+                            <span th:text="${music.title}"></span>
+                        </h1>
+                    </div>
+                    <div class="movie-soon">
+                        <div class="movie-soon-left">
+                            <a href="">
+                                <img th:src="${music.pic_radio}" class="musicinfo-img-size">
+                            </a>
+                            <div class="intro">
+                                <ul>
+                                    <li class="li-item li-padd">
+                                        <span>歌手：</span>
+                                        <span th:text="${music.author}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>专辑：</span>
+                                        <span th:text="${music.album_title}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>发行时间：</span>
+                                        <span th:text="${music.publishtime}"></span>
+                                    </li>
+                                    <li class="li-item li-padd">
+                                        <span>发行公司：</span>
+                                        <span th:text="${music.si_proxycompany }"></span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-
+                    <div class="music-brief">
+                        <h2>
+                            歌词
+                        </h2>
+                        <p th:text="${music.lyric}">
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,7 +134,6 @@
         </div>
     </div>
 </div>
-
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script>
     layui.use('element', function(){

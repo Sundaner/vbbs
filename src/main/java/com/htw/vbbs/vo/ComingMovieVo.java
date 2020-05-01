@@ -10,5 +10,5 @@ public class ComingMovieVo implements Serializable {
     private String title;
     private String pubdate;
     private String genres;
-    private String url;
+    private String id;
 }

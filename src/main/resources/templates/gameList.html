@@ -8,43 +8,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"  media="all">
     <style type="text/css">
-        .movie-soon{
-            display: flex;
+        .game-lists {
             flex: 1;
-            margin: 0 auto;
+            margin-left: 40px;
             position: relative;
-            width: 80%;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+        }
+        .game-item {
+            display: flex;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
             border-bottom: 1px solid #f2f2f2;
         }
-        .movie-soon-left {
-            display: flex;
-            width: 60%;
-        }
-        .movie-soon-right {
-            display: flex;
-            flex: 1;
-            width: 50%;
+        .game-img-size {
+            width: 100px;
+            height: 150px;
         }
         .intro {
             margin-left: 15px;
-        }
-        .ul-top {
-            margin-top: 20px;
-        }
-        .img-size {
-            width: 100px;
-            height: 150px;
         }
     </style>
 </head>
 <body>
 <ul class="padd layui-nav">
     <li class="layui-nav-item"><a href="home.html">社区</a></li>
-    <li class="layui-nav-item layui-this">
+    <li class="layui-nav-item">
         <a href="javascript:;">电影</a>
         <dl class="layui-nav-child">
             <dd><a href="">即将上映</a></dd>
@@ -59,7 +48,7 @@
             <dd><a href="">新歌榜单</a></dd>
         </dl>
     </li>
-    <li class="layui-nav-item"><a href="">游戏</a></li>
+    <li class="layui-nav-item layui-this"><a href="">游戏</a></li>
     <div class="right-li">
         <li class="layui-nav-item" lay-unselect="">
             <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
@@ -76,42 +65,34 @@
         <div class="left-container">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    <span>电影 / 高分票房</span>
+                    <span>游戏</span>
                 </div>
                 <div class="layui-card-body">
-                    <div th:each="i:${#numbers.sequence(0, length-2, 2)}">
-                        <div class="movie-soon">
-                            <div class="movie-soon-left">
-                                <a th:href="'/movie/info?id='+${movies[i].id}">
-                                    <img th:src="${movies[i].img}" class="img-size">
-                                </a>
-                                <div class="intro">
-                                    <h3>
-                                        <a th:href="'/movie/info?id='+${movies[i].id}" th:text="${movies[i].title}">title</a>
-                                    </h3>
-                                    <ul class="ul-top">
-                                        <li th:text="${movies[i].pubdate}">pubdate</li>
-                                        <li th:text="${movies[i].genres}">genres</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="movie-soon-right" th:if="${movies[i+1]} ne null">
-                                <a th:href="'/movie/info?id='+${movies[i+1].id}">
-                                    <img th:src="${movies[i+1].img}" class="img-size">
-                                </a>
-                                <div class="intro">
-                                    <h3>
-                                        <a th:href="'/movie/info?id='+${movies[i+1].id}" th:text="${movies[i+1].title}">title</a>
-                                    </h3>
-                                    <ul class="ul-top">
-                                        <li th:text="${movies[i+1].pubdate}">pubdate</li>
-                                        <li th:text="${movies[i+1].genres}">genres</li>
-                                    </ul>
-                                </div>
+                    <div class="game-lists">
+                        <div class="game-item" th:each="game:${pageInfo.list}">
+                            <a th:href="'/game/info?id='+${game.id}">
+                                <img th:src="${game.imgurl}" class="game-img-size">
+                            </a>
+                            <div class="intro">
+                                <ul class="ul-top">
+                                    <li class="li-item">
+                                        <h3>
+                                            <a th:href="'/game/info?id='+${game.id}" th:text="${game.title}"></a>
+                                        </h3>
+                                    </li>
+                                    <li class="li-item">
+                                        <span th:text="${game.type}"></span>&nbsp;
+                                        <span th:text="${game.platforms}"></span>
+                                    </li>
+                                    <li class="li-item">
+                                        <span>游戏评分：</span>
+                                        <span th:text="${game.avg}"></span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
+                        <div id="paginator"></div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -127,8 +108,8 @@
     </div>
 </div>
 
-<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="javascript">
     layui.use('element', function(){
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
@@ -138,7 +119,21 @@
             layer.msg(elem.text());
         });
     });
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        var haspre = [[${pageInfo.hasPreviousPage}]];
+        var hasnext = [[${pageInfo.hasNextPage}]];
+        laypage.render({
+            elem: 'paginator',
+            count: [[${pageInfo.total}]],
+            curr: [[${pageInfo.pageNum}]],
+            jump: function(obj, first){
+                if(!first){
+                    window.location.href="/game/list?pageNum="+obj.curr
+                }
+            }
+        });
+    });
 </script>
-
 </body>
 </html>

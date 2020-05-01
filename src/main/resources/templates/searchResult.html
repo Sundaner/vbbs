@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+  <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+  <link rel="stylesheet" th:href="@{/css/index2.css}">
+  <style type="text/css">
+
+  </style>
+</head>
+<body> 
+<ul class="padd layui-nav">
+  <li class="layui-nav-item"><a href="home.html">社区</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">电影</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">即将上映</a></dd>
+      <dd><a href="">高分电影</a></dd>
+      <dd><a href="">北美票房</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item layui-this">
+    <a href="javascript:;">音乐</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">豆瓣搜素</a></dd>
+      <dd><a href="">歌曲榜单</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="">游戏</a></li>
+  <div class="right-li">
+    <li class="layui-nav-item" lay-unselect="">
+      <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
+      <dl class="layui-nav-child">
+        <dd><a href="javascript:;">修改信息</a></dd>
+        <dd><a href="javascript:;">安全管理</a></dd>
+        <dd><a href="javascript:;">退了</a></dd>
+      </dl>
+    </li>
+  </div>
+</ul>
+<div class="container">
+  <div class="main-container">
+    <div class="left-container">
+      <div class="layui-card">
+        <div class="layui-card-header">
+          <span>电影 / 音乐搜索</span>
+        </div>
+        <div class="layui-card-body">
+          <div class="search">
+              <div class="search-main">
+                <div class="logo-left">
+                  <img th:src="@{/img/lg_music_a12_2.png}" height="27" width="115" alt="">
+                </div>
+                <div class="logo-input">
+                  <form action="">
+                    <input type="text" class="inp">
+                    <div class="sbtn">
+                      <input type="bottm"  class="btn">
+                    </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+          <div class="content">
+            <h1>搜索</h1>
+            <ul class="content-boxers">
+            </ul>
+            <div id="div1">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="right-container">
+        <div class="layui-card">
+          <div class="layui-card-header">卡片面板</div>
+          <div class="layui-card-body">
+            卡片式面板面板通常用于非白色背景色的主体内<br>
+            从而映衬出边框投影
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:inline="javascript">
+  window.key=[[${value}]];
+  window.start=[[${start}]];
+</script>
+<script th:src="@{/js/demo2.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script>
+layui.use('element', function(){
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+  
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+</script>
+
+</body>
+</html>
