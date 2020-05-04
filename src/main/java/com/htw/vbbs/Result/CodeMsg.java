@@ -17,11 +17,8 @@ public class CodeMsg {
     public static CodeMsg PASSWORD_ERROR = new CodeMsg(500215, "密码错误");
     public static CodeMsg HAVE_ACCOUNT = new CodeMsg(500216, "手机号已经注册请登录");
 
-    //电影模块 5003XX
-
-    //音乐模块 5004XX
-
-    //游戏模块 5005XX
+    //
+    public static CodeMsg UPLOAD_IMG_FAIL = new CodeMsg(500300, "上传图片失败");
 
 
 

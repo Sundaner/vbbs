@@ -30,6 +30,12 @@
         where userId = #{userId}
     </select>
 
+    <select id="getSimpInfoById" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select userId, nickname, portrait
+        from user
+        where userId = #{userId}
+    </select>
+
     <select id="getByPhone" resultMap="ResultMap" parameterType="java.lang.Long" >
         select
         <include refid="Base_Column_List" />

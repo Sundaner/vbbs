@@ -5,15 +5,77 @@
         <id column="invitationId" property="invitationId" jdbcType="INTEGER"/>
         <result column="userId" property="userId" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="context" property="context" jdbcType="LONGVARCHAR"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
         <result column="zan" property="zan" jdbcType="INTEGER"/>
+        <result column="store" property="store" jdbcType="INTEGER"/>
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List" >
-       invitationId,userId,context,zan,type,createTime,updateTime
+       invitationId, userId, title, content, zan, store, type, createTime, updateTime
     </sql>
+
+    <select id="getById" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from invitation
+        where invitationId = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.htw.vbbs.domain.Invitation" useGeneratedKeys="true" keyProperty="invitationId" keyColumn="invitationId">
+        insert into invitation (userId, title,
+          content, zan,store, type, createTime, updateTime)
+        values (#{userId}, #{title}, #{content},#{zan},
+         #{store}, #{type}, #{createTime}, #{updateTime})
+    </insert>
+
+
+    <!-- 一个文章，拥有多个评论 -->
+    <resultMap id="InvitationAndCommentResultMap" type="com.htw.vbbs.domain.Invitation">
+        <!-- 先配置 invitation 的属性 -->
+        <id column="invitationId" property="invitationId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+        <result column="zan" property="zan" jdbcType="INTEGER"/>
+        <result column="store" property="store" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="i_time" property="updateTime" jdbcType="TIMESTAMP"/>
+
+        <!-- 再配置 commentList 集合 -->
+        <collection property="commentList" ofType="com.htw.vbbs.domain.Comment">
+            <id column="commentId" property="commentId" jdbcType="INTEGER"/>
+            <result column="invitationId" property="invitationId" jdbcType="INTEGER"/>
+            <result column="uid" property="userId" jdbcType="INTEGER"/>
+            <result column="uid" property="userId" jdbcType="INTEGER"/>
+            <result column="replyId" property="replyId" jdbcType="INTEGER"/>
+            <result column="cont" property="content" jdbcType="VARCHAR"/>
+            <result column="cTime" property="createTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <select id="findInviComments" resultMap="InvitationAndCommentResultMap" parameterType="java.lang.Integer" >
+        select
+            i.invitationId,
+            i.userId,
+            i.title,
+            i.content,
+            i.zan,
+            i.store,
+            i.createTime,
+            i.updateTime as i_time,
+            c.commentId,
+            c.replyId,
+            c.userId as uid,
+            c.content as cont,
+            c.createTime as cTime
+        from invitation i, comment c
+        where i.invitationId = c.invitationId
+        and i.invitationId = #{id}
+        ORDER BY cTime DESC ;
+    </select>
 
 </mapper>

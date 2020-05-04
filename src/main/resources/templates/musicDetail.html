@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
     <style type="text/css">
         .m-title{
             width: 70%;
@@ -63,6 +64,7 @@
     </li>
     <li class="layui-nav-item"><a href="">游戏</a></li>
     <div class="right-li">
+        <i class="layui-icon layui-icon-notice"></i>
         <li class="layui-nav-item" lay-unselect="">
             <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
             <dl class="layui-nav-child">
@@ -124,12 +126,24 @@
             </div>
         </div>
         <div class="right-container">
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
+            <div >
+                <button class="layui-btn ait-sub" lay-submit lay-filter="formDemo">发表文章</button>
+            </div>
+            <div class="right-div-ul">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="layui-icon layui-icon-user"></i>
+                            <span>我的关注</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="layui-icon layui-icon-rate"></i>
+                            <span>我的收藏</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
     <style type="text/css">
         .edit.layui-input-block{
             margin-left: 10px;
@@ -45,6 +46,7 @@
     </li>
     <li class="layui-nav-item"><a href="">游戏</a></li>
     <div class="right-li">
+        <i class="layui-icon layui-icon-notice"></i>
         <li class="layui-nav-item" lay-unselect="">
             <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
             <dl class="layui-nav-child">
@@ -66,10 +68,10 @@
                     <form class="layui-form" action="">
                         <div class="layui-form-item">
                             <div class="edit layui-input-block layui-inline inline-long1">
-                                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                <input type="text" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
                             </div>
                             <div class="edit layui-input-block layui-inline inline-long2">
-                                <select name="city" lay-verify="required">
+                                <select name="type" lay-verify="required" id="type">
                                     <option value=""></option>
                                     <option value="0">交流</option>
                                     <option value="1">电影说</option>
@@ -82,25 +84,37 @@
                         <div id = "edit"></div>
                         <div class="layui-form-item">
                             <div class="edit layui-input-block mar-top">
-                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn1">立即提交</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
         <div class="right-container">
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
+            <div >
+                <button class="layui-btn ait-sub" lay-filter="formDemo2">发表文章</button>
+            </div>
+            <div class="right-div-ul">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="layui-icon layui-icon-user"></i>
+                            <span>我的关注</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="layui-icon layui-icon-rate"></i>
+                            <span>我的收藏</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+</body>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/wangEditor.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
@@ -115,13 +129,44 @@
     });
     layui.use('form', function () {
         var form = layui.form;
+        var layer = layui.layer;
+        form.on('submit(formDemo)', function(data){
+            var invitation = {
+                title: $("#title").val(),
+                type: $("#type").val(),
+                content: editor.txt.html()
+            }
+            $.ajax({
+                url:"/articles/submit",
+                type:"POST",
+                contentType: "application/x-www-form-urlencoded",
+                data:invitation,
+                success: function (result) {
+                    console.log(result);
+                    if (result.code == 0) {
+                        layer.msg('文章发布成功！', {
+                            icon: 1,
+                            time: 2000
+                        }, function(){
+                            window.location.href = "/articles/info?id=" + result.data;
+                        });
+                    } else {
+                        layer.msg(result.msg);
+                    }
+                },
+                error: function () {
+                    console.log("请求失败");
+                }
+            });
+            return false;
+        });
         form.render();
     });
 
     var editor;
     $(document).ready(function () {
         var E = window.wangEditor
-        editor = new E('#edit') // 隐藏“网络图片”tab
+        editor = new E('#edit') // 隐藏“网络图片
         editor.customConfig.showLinkImg = false
         editor.customConfig.menus = [ //菜单
             'head',  // 标题
@@ -146,41 +191,23 @@
             'redo'  // 重复
         ]
         editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
-        editor.customConfig.uploadImgServer = '/upload';
-        editor.customConfig.uploadFileName = 'imageFile'; //与后台获取文件名相同
+        editor.customConfig.uploadImgServer = '/user/uploadImg';
+        editor.customConfig.uploadFileName = 'file'; //与后台获取文件名相同
         editor.customConfig.linkImgCallback = function (url) {
             console.log(url) // url 即插入图片的地址
         }
         editor.customConfig.uploadImgHooks = {
-            before: function (xhr, editor, files) {
-
-            },
-            success: function (xhr, editor, result) {
-
-            },
-            fail: function (xhr, editor, result) {
-
-            },
-            error: function (xhr, editor) {
-
-            },
-            timeout: function (xhr, editor) {
-
-            },
-
+            before: function (xhr, editor, files) {},
+            success: function (xhr, editor, result) {},
+            fail: function (xhr, editor, result) {},
+            error: function (xhr, editor) {},
+            timeout: function (xhr, editor) {},
             customInsert: function (insertImg, result, editor) {
-                var url = result.url
+                var url = result.data;
                 insertImg(url)
             }
         }
         editor.create()
-
-        document.getElementById('btn1').addEventListener('click', function () {
-            // 读取 html
-            alert(editor.txt.html())
-            console.log(editor.txt.html())
-        }, false)
     })
 </script>
-</body>
 </html>

@@ -1,0 +1,17 @@
+/*侧边start */
+.ait-sub{
+  width: 100%;
+}
+.right-div-ul{
+  width: 100%;
+  margin-top: 10px;
+  background-color: #fff
+}
+.right-div-ul li{
+  line-height: 2.5;
+  margin: 0 20px;
+}
+.right-div-ul li span{
+  margin: 0 10px;
+}
+/*侧边end */

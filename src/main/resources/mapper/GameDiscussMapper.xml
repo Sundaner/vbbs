@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.htw.vbbs.dao.GameDiscussMapper">
+    <resultMap id="ResultMap" type="com.htw.vbbs.domain.GameDiscuss">
+        <id column="gameDisId" property="gameDisId" jdbcType="INTEGER"/>
+        <result column="gameId" property="gameId" jdbcType="VARCHAR"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="replyId" property="replyId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        gameDisId, gameId, userId, content, createTime, replyId
+    </sql>
+
+    <select id="getGameDiscussList" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from gamediscuss
+        where gameId = #{id}
+        order by createTime desc
+    </select>
+
+    <select id="getById" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from gamediscuss
+        where gameDisId = #{id}
+    </select>
+
+    <insert id="inerstNew" parameterType="com.htw.vbbs.domain.GameDiscuss" useGeneratedKeys="true" keyProperty="gameDisId" keyColumn="gameDisId">
+      INSERT INTO gamediscuss (gameId, userId, content
+        , createTime, replyId)
+      VALUES (#{gameId}, #{userId}, #{content}, #{createTime},
+        #{replyId});
+    </insert>
+
+
+</mapper>

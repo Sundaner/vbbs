@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.htw.vbbs.dao.CommentMapper">
+    <resultMap id="ResultMap" type="com.htw.vbbs.domain.Comment">
+        <id column="commentId" property="commentId" jdbcType="INTEGER"/>
+        <result column="invitationId" property="invitationId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        commentId, invitationId, userId, content, replyid, createTime
+    </sql>
+
+
+    <select id="getById" parameterType="java.lang.Integer" resultMap="ResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from comment
+        where commentId = #{id}
+    </select>
+
+    <resultMap id="CommentAndReplyResultMap" type="com.htw.vbbs.domain.Comment">
+        <id column="commentId" property="commentId" jdbcType="INTEGER"/>
+        <result column="invitationId" property="invitationId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="replyId" property="replyId" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <association property="parent" javaType="com.htw.vbbs.domain.Comment" >
+            <id column="commentId" property="commentId" jdbcType="INTEGER"/>
+            <result column="p_inv" property="invitationId" jdbcType="INTEGER"/>
+            <result column="p_uid" property="userId" jdbcType="INTEGER"/>
+            <result column="p_con" property="content" jdbcType="VARCHAR"/>
+            <result column="p_rid" property="replyId" jdbcType="INTEGER"/>
+            <result column="p_time" property="createTime" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <select id="queryCommAndReply" resultMap="CommentAndReplyResultMap" parameterType="java.lang.Integer">
+        select
+            s.userId, s.content, s.createTime,
+            p.invitationId as p_inv, p.userId as p_uid, p.content as p_con,
+            p.createTime as p_time, p.replyId as p_rid
+        from comment s, comment p
+        where s.replyId = p.commentId;
+    </select>
+
+    <select id="hasComment" parameterType="java.lang.Integer" resultMap="ResultMap">
+        select commentId
+            from comment
+            where invitationId = #{id}
+        limit 1;
+    </select>
+
+
+    <insert id="inerstNew" parameterType="com.htw.vbbs.domain.Comment" useGeneratedKeys="true" keyProperty="commentId" keyColumn="commentId">
+      INSERT INTO Comment(invitationId, userId, content
+        , createTime, replyId)
+      VALUES (#{invitationId}, #{userId}, #{content}, #{createTime},
+        #{replyId});
+    </insert>
+
+    <select id="getComments" parameterType="java.lang.Integer" resultMap="ResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from comment
+        where invitationId = #{id}
+        order by createTime desc
+    </select>
+
+</mapper>

@@ -100,4 +100,8 @@ public class UserService {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
+
+    public User getSimpInfoById(int userId) {
+        return userMapper.getSimpInfoById(userId);
+    }
 }

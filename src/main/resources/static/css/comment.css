@@ -1,0 +1,55 @@
+/*评论 start*/
+.art-discuss {
+  padding: 10px 15px;
+  background-color: #fff
+}
+.art-d-span{
+  margin-bottom: 20px;
+  text-align: center;
+}
+.art-form{
+  display: flex;
+}
+.art-form-inp{
+  width: 92%;
+  margin-right: 15px;
+  display: flex;
+}
+.pinlun-qu{
+  margin-top: 20px;
+}
+.ping-p{
+  position: relative;
+  line-height: 20px;
+  margin-top: 5px;
+}
+.art-reply{
+  margin-top: 3px;
+  font-size: 12px;
+  color: #70727c;
+}
+.art-yin{
+  padding: 0;
+}
+.art-yin-img {
+  max-width: 20px;
+  max-height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -webkit-transition: all .5s ease-out .1s;
+  transition: all .5s ease-out .1s;
+  border: 1px solid #e8e8e8;
+}
+.art-meta-item{
+    font-size: 12px;
+    margin-left: 8px;
+}
+.c_bl {
+  color: blue;
+  padding-left: 15px;
+}
+
+/*评论end*/

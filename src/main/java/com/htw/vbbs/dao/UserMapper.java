@@ -11,4 +11,6 @@ public interface UserMapper {
     User getByPhone(long phone);
 
     int insert(User user);
+
+    User getSimpInfoById(int id);
 }

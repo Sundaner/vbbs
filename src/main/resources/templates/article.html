@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/comment.css}"  media="all">
+    <style type="text/css">
+        .art-t-header {
+            height: auto;
+            padding: 20px 0 10px 20px
+        }
+        .art-t-span {
+            color: #adb1af;
+        }
+        .zan-collect {
+            margin-top: 30px;
+        }
+        .art-count{
+            font-size: 12px;
+            color: #fff;
+            background: #aab0c6;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-right: 30px;
+        }
+
+</style>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        var art = [[${article.content}]];
+        $(document).ready(function () {
+            $('#article').html(art);
+        })
+    </script>
+</head>
+<body>
+<ul class="padd layui-nav">
+    <li class="layui-nav-item layui-this"><a href="home.html">社区</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">电影</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">即将上映</a></dd>
+            <dd><a href="">高分电影</a></dd>
+            <dd><a href="">北美票房</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">音乐</a>
+        <dl class="layui-nav-child">
+            <dd><a href="">经典老歌</a></dd>
+            <dd><a href="">新歌榜单</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">游戏</a></li>
+    <div class="right-li">
+        <i class="layui-icon layui-icon-notice"></i>
+        <li class="layui-nav-item" lay-unselect="">
+            <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">修改信息</a></dd>
+                <dd><a href="javascript:;">安全管理</a></dd>
+                <dd><a href="javascript:;">退了</a></dd>
+            </dl>
+        </li>
+    </div>
+</ul>
+<div class="container">
+    <div class="main-container">
+        <div class="left-container">
+            <div class="layui-card">
+                <div class="high layui-card-header art-t-header" style="height: auto;">
+                    <div>
+                        <h2 th:text="${article.title}"></h2>
+                    </div>
+                    <div>
+                        <span class="art-t-span" >发布于</span>
+                        <span class="art-t-span" th:text="${article.createTime}"></span>
+                        <span class="art-t-span" >&nbsp/&nbsp 更新于</span>
+                        <span class="art-t-span" th:text="${article.updateTime}"></span>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="article"></div>
+                    <div class="zan-collect">
+                        <img th:src="@{/img/zan.svg}">
+                        <span class="art-count" th:text="${article.zan}"></span>
+                        <img th:src="@{/img/collect.svg}">
+                        <span class="art-count" th:text="${article.store}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="art-discuss">
+                <div class="art-d-span">
+                    <span class="">评论</span>
+                </div>
+                <span style="display:none" id="commid">0</span>
+                <div id="notice"></div>
+                <form class="layui-form"  action="">
+                    <div class="art-form">
+                        <div class="art-form-inp">
+                            <input type="text" name="comt" required lay-verify="required" id="comt"
+                             autocomplete="off" class="layui-input" placeholder="输入评论...">
+                        </div>
+                        <div class="art-form-btn">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">评论</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="pinlun-qu">
+                    <ul id="comul">
+                        <li class="li-item" th:each="a:${pageInfo.list}">
+                            <div class="li-item-header">
+                                <div class="li-item-left">
+                                    <a href="">
+                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                                    </a>
+                                </div>
+                                <div class="li-item-center">
+                                    <h5 class="li-title">
+                                        <a th:text="${a.userName}"></a>
+                                        <span class="art-meta-item" th:text="${a.createTime}"></span>
+                                    </h5>
+                                    <div class="art-reply" th:if="${a.parent} ne null">
+                                        <blockquote class="layui-elem-quote layui-quote-nm art-yin">
+                                            <div>
+                                                <img th:src="@{/img/logo.jpg}" class="art-yin-img">
+                                                <span th:text="${a.parent.userName}"></span>
+                                                <span class="art-meta-item" th:text="${a.parent.createTime}"></span>
+                                            </div>
+                                            <div>
+                                                <p th:text="${a.parent.content}"></p>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <div class="ping-p">
+                                        <p th:text="${a.content}"></p>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <a href="#" onclick="jump(this)">
+                                        <span style="display:none" th:text="${a.commentId}"></span>
+                                        <span class="meta-item-type">回复</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <div id="paginator"></div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+
+        <div class="right-container">
+            <div >
+                <button class="layui-btn ait-sub" lay-submit lay-filter="formDemo2">发表文章</button>
+            </div>
+            <div class="right-div-ul">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="layui-icon layui-icon-user"></i>
+                            <span>我的关注</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="layui-icon layui-icon-rate"></i>
+                            <span>我的收藏</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/js/comment.js}"></script>
+<script th:inline="javascript">
+    var commentId = 0;
+    layui.use('element', function(){
+        var element = layui.element;
+        element.on('nav(demo)', function(elem){
+            layer.msg(elem.text());
+        });
+    });
+
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        var id = [[${article.invitationId}]];
+        console.log(id);
+        console.log([[${pageInfo.pageNum}]]);
+        console.log([[${pageInfo.total}]]);
+        laypage.render({
+            elem: 'paginator',
+            limit:20,
+            count: [[${pageInfo.total}]],
+            curr: [[${pageInfo.pageNum}]],
+            jump: function(obj, first){
+                if(!first){
+                    window.location.href="/articles/info?id=" + id + "&pageNum=" + obj.curr
+                }
+            }
+        });
+    });
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        var invitationId = location.search.slice(4);
+        form.on('submit(formDemo)', function(data){
+            var content = data['field']['comt'];
+            var fdata = {
+                content:content,
+                commentId:commentId,
+                invitationId:invitationId
+            }
+            $.ajax({
+                url:"/comment/submit",
+                type:"POST",
+                dataType: "json",
+                data: fdata,
+                success: function(result){
+                    cancel();
+                    if (result.code == 0) {
+                        layer.msg('评论成功！');
+                        appendli(result);
+                    } else {
+                        console.log(result);
+                        layer.msg(result.msg);
+                    }
+                }
+            })
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>
