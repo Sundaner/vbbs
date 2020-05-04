@@ -36,7 +36,7 @@ public class MusicController {
         List<Rank> ranks = musicService.getRank();
         model.addAttribute("length",ranks.size());
         model.addAttribute("rank", ranks);
-        return "musicRank";
+        return "music/musicRank";
     }
 
     @RequestMapping("/detail")
@@ -53,13 +53,13 @@ public class MusicController {
 
         model.addAttribute("music", detail);
         model.addAttribute("pageInfo", pageInfo);
-        return "musicDetail";
+        return "music/musicDetail";
     }
 
     @RequestMapping("/search")
     public String searchMusic (Model model, HttpServletRequest request, @RequestParam(defaultValue = "0", value = "id")int id) {
         model.addAttribute("id",id);
-        return "searchMusic";
+        return "music/searchMusic";
     }
 
     @RequestMapping("/searchInfo")
@@ -67,7 +67,7 @@ public class MusicController {
                                     @RequestParam(defaultValue = "0", value = "start")int start) {
         model.addAttribute("value", value);
         model.addAttribute("start",start);
-        return "searchResult";
+        return "music/searchResult";
     }
 
     @RequestMapping("/submit")

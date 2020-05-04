@@ -49,36 +49,7 @@
     </style>
 </head>
 <body>
-<ul class="padd layui-nav">
-    <li class="layui-nav-item"><a href="home.html">社区</a></li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">电影</a>
-        <dl class="layui-nav-child">
-            <dd><a href="">即将上映</a></dd>
-            <dd><a href="">高分电影</a></dd>
-            <dd><a href="">北美票房</a></dd>
-        </dl>
-    </li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">音乐</a>
-        <dl class="layui-nav-child">
-            <dd><a href="">经典老歌</a></dd>
-            <dd><a href="">新歌榜单</a></dd>
-        </dl>
-    </li>
-    <li class="layui-nav-item layui-this"><a href="">游戏</a></li>
-    <div class="right-li">
-        <i class="layui-icon layui-icon-notice"></i>
-        <li class="layui-nav-item" lay-unselect="">
-            <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
-            <dl class="layui-nav-child">
-                <dd><a href="javascript:;">修改信息</a></dd>
-                <dd><a href="javascript:;">安全管理</a></dd>
-                <dd><a href="javascript:;">退了</a></dd>
-            </dl>
-        </li>
-    </div>
-</ul>
+<ul th:replace="common/header::copy"></ul>
 <div class="container">
     <div class="main-container">
         <div class="left-container">
@@ -133,87 +104,9 @@
                     </div>
                 </div>
             </div>
-            <div class="art-discuss">
-                <div class="art-d-span">
-                    <span class="">评论</span>
-                </div>
-                <span style="display:none" id="commid">0</span>
-                <div id="notice"></div>
-                <form class="layui-form"  action="">
-                    <div class="art-form">
-                        <div class="art-form-inp">
-                            <input type="text" name="comt" required lay-verify="required" id="comt"
-                                   autocomplete="off" class="layui-input" placeholder="输入评论...">
-                        </div>
-                        <div class="art-form-btn">
-                            <button class="layui-btn" lay-submit lay-filter="formDemo">评论</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="pinlun-qu">
-                    <ul id="comul">
-                        <li class="li-item" th:each="a:${pageInfo.list}">
-                            <div class="li-item-header">
-                                <div class="li-item-left">
-                                    <a href="">
-                                        <img th:src="@{/img/logo.jpg}" class="li-avatar">
-                                    </a>
-                                </div>
-                                <div class="li-item-center">
-                                    <h5 class="li-title">
-                                        <a th:text="${a.userName}"></a>
-                                        <span class="art-meta-item" th:text="${a.createTime}"></span>
-                                    </h5>
-                                    <div class="art-reply" th:if="${a.parent} ne null">
-                                        <blockquote class="layui-elem-quote layui-quote-nm art-yin">
-                                            <div>
-                                                <img th:src="@{/img/logo.jpg}" class="art-yin-img">
-                                                <span th:text="${a.parent.userName}"></span>
-                                                <span class="art-meta-item" th:text="${a.parent.createTime}"></span>
-                                            </div>
-                                            <div>
-                                                <p th:text="${a.parent.content}"></p>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                    <div class="ping-p">
-                                        <p th:text="${a.content}"></p>
-                                    </div>
-                                </div>
-                                <div class="li-item-right">
-                                    <a href="#" onclick="jump(this)">
-                                        <span style="display:none" th:text="${a.commentId}"></span>
-                                        <span class="meta-item-type">回复</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <div id="paginator"></div>
-                    </ul>
-                </div>
-            </div>
+            <div th:replace="common/comment::copy"></div>
         </div>
-        <div class="right-container">
-            <div >
-                <button class="layui-btn ait-sub" lay-submit lay-filter="formDemo">发表文章</button>
-            </div>
-            <div class="right-div-ul">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="layui-icon layui-icon-user"></i>
-                            <span>我的关注</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="layui-icon layui-icon-rate"></i>
-                            <span>我的收藏</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <div th:replace="common/right::copy">
     </div>
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>

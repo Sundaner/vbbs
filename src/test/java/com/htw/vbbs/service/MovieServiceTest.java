@@ -17,7 +17,7 @@ public class MovieServiceTest {
 
     @Test
     public void testMovieInfo(){
-        String id = "34768418";
+        int id = 34768418;
         movieService.getMovieInfo(id);
     }
 }

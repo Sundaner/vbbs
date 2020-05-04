@@ -59,36 +59,7 @@
     </style>
 </head>
 <body>
-<ul class="padd layui-nav">
-    <li class="layui-nav-item"><a href="home.html">社区</a></li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">电影</a>
-        <dl class="layui-nav-child">
-            <dd><a href="">即将上映</a></dd>
-            <dd><a href="">高分电影</a></dd>
-            <dd><a href="">北美票房</a></dd>
-        </dl>
-    </li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">音乐</a>
-        <dl class="layui-nav-child">
-            <dd><a href="">经典老歌</a></dd>
-            <dd><a href="">新歌榜单</a></dd>
-        </dl>
-    </li>
-    <li class="layui-nav-item "><a href="">游戏</a></li>
-    <div class="right-li">
-        <li class="layui-nav-item"><a href="">游戏</a></li>
-        <li class="layui-nav-item" lay-unselect="">
-            <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
-            <dl class="layui-nav-child">
-                <dd><a href="javascript:;">修改信息</a></dd>
-                <dd><a href="javascript:;">安全管理</a></dd>
-                <dd><a href="javascript:;">退了</a></dd>
-            </dl>
-        </li>
-    </div>
-</ul>
+<ul th:replace="common/header::copy"></ul>
 <div class="container">
     <div class="main-container">
         <div class="left-container">
@@ -132,27 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="right-container">
-            <div >
-                <button class="layui-btn ait-sub" lay-submit lay-filter="formDemo">发表文章</button>
-            </div>
-            <div class="right-div-ul">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="layui-icon layui-icon-user"></i>
-                            <span>我的关注</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="layui-icon layui-icon-rate"></i>
-                            <span>我的收藏</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <div th:replace="common/right::copy">
     </div>
 </div>
 

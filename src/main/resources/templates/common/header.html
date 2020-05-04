@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<ul class="padd layui-nav" th:fragment="copy">
+    <li class="layui-nav-item"  layui-this><a href="/home">社区</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">电影</a>
+        <dl class="layui-nav-child">
+            <dd><a href="/movie/coming">即将上映</a></dd>
+            <dd><a href="/movie/top">高分电影</a></dd>
+            <dd><a href="/movie/usbox">北美票房</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">音乐</a>
+        <dl class="layui-nav-child">
+            <dd><a href="/music/search">豆瓣搜索</a></dd>
+            <dd><a href="/music/rank">歌曲榜单</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="/game/list">游戏</a></li>
+    <div class="right-li">
+        <i class="layui-icon layui-icon-notice"></i>
+        <li class="layui-nav-item" lay-unselect="">
+            <a href="javascript:;"><img th:src="@{/img/logo.jpg}" class="layui-nav-img">我</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">修改信息</a></dd>
+                <dd><a href="javascript:;">安全管理</a></dd>
+                <dd><a href="javascript:;">退了</a></dd>
+            </dl>
+        </li>
+    </div>
+</ul>

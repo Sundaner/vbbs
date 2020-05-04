@@ -35,11 +35,11 @@ public class MovieController {
         }
         model.addAttribute("movies", movies);
         model.addAttribute("length", movies.size());
-        return "coming_movie";
+        return "movie/coming_movie";
     }
 
     @RequestMapping("/info")
-    public String getMovieInfo (Model model, HttpServletRequest request, @RequestParam String id) {
+    public String getMovieInfo (Model model, HttpServletRequest request, @RequestParam int id) {
         OneSubjectVo subjectVo = movieService.getMovieInfo(id);
 
         List<MovieDiscuss> movieDiscussList = movieDiscussService.getMovieDiscussList(id);
@@ -50,7 +50,8 @@ public class MovieController {
         pageInfo.setTotal(page.getTotal());
 
         model.addAttribute("movie", subjectVo);
-        return "movieInfo";
+        model.addAttribute("pageInfo", pageInfo);
+        return "movie/movieInfo";
     }
 
     @RequestMapping("/top")
@@ -61,7 +62,7 @@ public class MovieController {
         }
         model.addAttribute("movies", movies);
         model.addAttribute("length", movies.size());
-        return "top_movie";
+        return "movie/top_movie";
     }
 
     @RequestMapping("/usbox")
@@ -72,7 +73,7 @@ public class MovieController {
         }
         model.addAttribute("movies", movies);
         model.addAttribute("length", movies.size());
-        return "usbox_movie";
+        return "movie/usbox_movie";
     }
 
     @RequestMapping("/submit")

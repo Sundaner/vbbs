@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface MovieDiscussMapper {
-    List<MovieDiscuss> getDisList(String id);
+    List<MovieDiscuss> getDisList(int id);
 
     MovieDiscuss getById(int id);
 

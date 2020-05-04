@@ -35,7 +35,7 @@ public class GameController {
         List<Game> gameList = gameservice.getGameList();
         PageInfo<Game> pageInfo = new PageInfo<>(gameList);
         model.addAttribute("pageInfo", pageInfo);
-        return "gameList";
+        return "game/gameList";
     }
 
     @RequestMapping("/info")
@@ -50,7 +50,7 @@ public class GameController {
 
         model.addAttribute("game", game);
         model.addAttribute("pageInfo",pageInfo);
-        return "gameInfo";
+        return "game/gameInfo";
     }
 
     @RequestMapping("/submit")

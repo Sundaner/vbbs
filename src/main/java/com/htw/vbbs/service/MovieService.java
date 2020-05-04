@@ -39,7 +39,7 @@ public class MovieService {
         return comingMovieVos;
     }
 
-    public OneSubjectVo getMovieInfo(String id){
+    public OneSubjectVo getMovieInfo(int id){
         String url = DOUBAN_URL + "/v2/movie/subject/" + id;
         HashMap<String, String> param = Maps.newHashMap();
         String result = HttpUtil.httpRequst(url, param, ENCODE, GET);

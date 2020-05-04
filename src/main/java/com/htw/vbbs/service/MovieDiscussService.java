@@ -22,7 +22,7 @@ public class MovieDiscussService {
     @Autowired
     private UserService userService;
 
-    public List<MovieDiscuss> getMovieDiscussList(String id) {
+    public List<MovieDiscuss> getMovieDiscussList(int id) {
         return movieDiscussMapper.getDisList(id);
     }
 
