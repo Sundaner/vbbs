@@ -22,8 +22,8 @@
             <li class="li-item" th:each="a:${pageInfo.list}">
                 <div class="li-item-header">
                     <div class="li-item-left">
-                        <a href="">
-                            <img th:src="@{/img/logo.jpg}" class="li-avatar">
+                        <a th:href="'/user/blog?id=' + ${a.userId}">
+                            <img th:src="${a.userImg}" class="li-avatar">
                         </a>
                     </div>
                     <div class="li-item-center">
@@ -34,7 +34,7 @@
                         <div class="art-reply" th:if="${a.parent} ne null">
                             <blockquote class="layui-elem-quote layui-quote-nm art-yin">
                                 <div>
-                                    <img th:src="@{/img/logo.jpg}" class="art-yin-img">
+                                    <img th:src="${a.parent.userImg}" class="art-yin-img">
                                     <span th:text="${a.parent.userName}"></span>
                                     <span class="art-meta-item" th:text="${a.parent.createTime}"></span>
                                 </div>

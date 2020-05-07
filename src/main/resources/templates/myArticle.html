@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <style type="text/css">
+        .blog-title {
+            font-size: 30px;
+            color: #1E9FFF;
+            margin-right: 20px;
+        }
+        .high-title{
+            line-height: 80px;
+            height: 80px;
+            border-color: #c0c4cc
+        }
+        .user-card{
+            width: 210px;
+            background-color: #fff;
+        }
+        .pname{
+            margin: 0 auto;
+        }
+        .left-p{
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+            border-radius: 0.5;
+        }
+        .right-name{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .btn-padd{
+            padding: 0 30px;
+        }
+        .a-edit{
+            margin-right: 20px
+        }
+    </style>
+</head>
+<body>
+<ul th:replace="common/header::copy"></ul>
+<div class="container">
+    <div class="main-container">
+        <div class="left-container">
+            <div class="layui-card">
+                <div class="layui-card-header high-title">
+                    <h2>
+                        <p>
+                            <i class="layui-icon layui-icon-read blog-title"></i>
+                            <span>我的文章</span>
+                        </p>
+                    </h2>
+                </div>
+                <div class="layui-card-body">
+                    <ul>
+                        <li class="li-item" th:each="p:${pageInfo.list}">
+                            <div class="li-item-header">
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a th:text="${p.title}" th:href="'/articles/info?id='+ ${p.invitationId}"></a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item" th:text="${p.updateTime}"></span>
+                                        <span class="meta-item-type" th:text="${p.trueType}"></span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <a class="a-edit"  th:href="'/articles/edit?id='+ ${p.invitationId}">编辑</a>
+                                    <a onclick="deleteNotice(this)">删除</a>
+                                    <span class="none" th:text="${p.invitationId}"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="paginator"></div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="common/right::copy">
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'paginator',
+            limit: 20,
+            count: [[${pageInfo.total}]],
+            curr: [[${pageInfo.pageNum}]],
+            jump: function(obj, first){
+                if(!first){
+                    window.location.href="/myArticle?pageNum="+ obj.curr
+                }
+            }
+        });
+    });
+    function deleteNotice(elem){
+        var id = $(elem).next('span').eq(0).text();
+        console.log(id);
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.open({
+                content: "删除文章将无法找回，你还要继续删除吗？",
+                btn: ['继续删除','取消'],
+                yes: function(index, layero){
+                    $.ajax({
+                        url:"/articles/delete",
+                        type:"POST",
+                        dataType: "json",
+                        data: "id="+id,
+                        success: function(result){
+                            layer.close(index);
+                            if (result.code == 0) {
+                                layer.msg("删除成功");
+                            } else {
+                                layer.msg(result.msg);
+                            }
+                        }
+                    });
+
+                },
+                btn2: function(index, layero) {},
+                cancel: function(index,layero){},
+            })
+        });
+    }
+
+</script>
+
+</body>
+</html>

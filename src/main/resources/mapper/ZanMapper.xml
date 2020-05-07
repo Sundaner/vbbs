@@ -2,13 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.htw.vbbs.dao.ZanMapper">
     <resultMap id="ResultMap" type="com.htw.vbbs.domain.Zan">
-
+        <id column="zanId" property="zanId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="invitationId" property="invitationId" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List" >
-
+        zanId, userId, invitationId, createTime
     </sql>
 
 
+    <insert id="insertZan" parameterType="com.htw.vbbs.domain.Zan">
+        insert into zan(userId, invitationId)
+        values (#{userId}, #{invitationId})
+    </insert>
+
+    <delete id="deleteZan" parameterType="com.htw.vbbs.domain.Zan">
+        delete from zan where userId = #{userId} and invitationId = #{invitationId}
+    </delete>
+
+    <select id="hasZan" parameterType="com.htw.vbbs.domain.Zan" resultMap="ResultMap">
+        select zanId
+        from zan
+        where userId = #{userId} and invitationid = #{invitationId}
+    </select>
+
+    <delete id="deleteArt" parameterType="java.lang.Integer">
+        delete
+        from zan
+        where invitationId = #{id}
+    </delete>
 
 </mapper>

@@ -13,4 +13,8 @@ public interface UserMapper {
     int insert(User user);
 
     User getSimpInfoById(int id);
+
+    int updateImg(User user);
+
+    int updateInfo(User user);
 }

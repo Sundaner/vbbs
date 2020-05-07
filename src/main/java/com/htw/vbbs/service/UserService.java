@@ -2,6 +2,7 @@ package com.htw.vbbs.service;
 
 import com.htw.vbbs.Exception.GlobalException;
 import com.htw.vbbs.Result.CodeMsg;
+import com.htw.vbbs.config.UserArgResolver;
 import com.htw.vbbs.dao.UserMapper;
 import com.htw.vbbs.domain.User;
 import com.htw.vbbs.redis.RedisService;
@@ -10,13 +11,18 @@ import com.htw.vbbs.util.MD5Util;
 import com.htw.vbbs.util.UUIDUtil;
 import com.htw.vbbs.vo.LoginVo;
 import com.htw.vbbs.vo.RegisterVo;
+import com.htw.vbbs.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -28,12 +34,15 @@ public class UserService {
     private UserMapper userMapper;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private UserArgResolver userArgResolver;
 
     public User getByToken(HttpServletResponse response, String token) {
         if (StringUtils.isEmpty(token)) {
             return null;
         }
         User user = redisService.get(UserKey.token, token, User.class);
+        //延长有效期
         if (user != null) {
             addCookie(response, token, user);
         }
@@ -103,5 +112,47 @@ public class UserService {
 
     public User getSimpInfoById(int userId) {
         return userMapper.getSimpInfoById(userId);
+    }
+
+    @Transactional
+    public int updateImg(HttpServletRequest request, HttpServletResponse response, int userId, String url) {
+        User user = new User();
+        user.setUserId(userId);
+        user.setPortrait(url);
+        Date updateTime = new Date();
+        Timestamp timeStamp = new Timestamp(updateTime.getTime());
+        user.setUpdateTime(timeStamp);
+        int re = userMapper.updateImg(user);
+        if(re == 1){
+            User new_user = userMapper.getById(userId);
+            String token = userArgResolver.getCookieValue(request, COOKI_NAME_TOKEN);
+            addCookie(response, token, new_user);
+        }
+        return re;
+    }
+
+    @Transactional
+    public int updateInfo(HttpServletRequest request, HttpServletResponse response,int userId, UserVo vo) throws ParseException {
+        User user = new User();
+        user.setUserId(userId);
+        user.setNickname(vo.getName());
+        user.setPhone(vo.getPhone());
+        user.setAddress(vo.getAddress());
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date=sdf.parse(vo.getBirth());
+
+        user.setBirthday(date);
+        user.setSign(vo.getSign());
+        Date updateTime = new Date();
+        Timestamp timeStamp = new Timestamp(updateTime.getTime());
+        user.setUpdateTime(timeStamp);
+        int re = userMapper.updateInfo(user);
+        if(re == 1){
+            User new_user = userMapper.getById(userId);
+            String token = userArgResolver.getCookieValue(request, COOKI_NAME_TOKEN);
+            addCookie(response, token, new_user);
+        }
+        return re;
     }
 }

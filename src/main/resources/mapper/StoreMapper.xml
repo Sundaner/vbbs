@@ -2,13 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.htw.vbbs.dao.StoreMapper">
     <resultMap id="ResultMap" type="com.htw.vbbs.domain.Store">
-
+        <id column="storeId" property="storeId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="invitationId" property="invitationId" jdbcType="INTEGER"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List" >
-
+        storeid, userId, invitationId, createTime
     </sql>
 
+    <insert id="insertStore" parameterType="com.htw.vbbs.domain.Store">
+        insert into store(userId, invitationId, updateTime)
+        values (#{userId}, #{invitationId}, #{updateTime})
+    </insert>
 
+    <delete id="deleteStore">
+        delete from store where userId = #{userId} and invitationId = #{invitationId}
+    </delete>
+
+    <select id="hasStore" parameterType="com.htw.vbbs.domain.Store" resultMap="ResultMap">
+        select storeId
+        from store
+        where userId = #{userId} and invitationid = #{invitationId}
+    </select>
+
+    <select id="getMyStore" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select invitationId
+        from store
+        where userId = #{userId}
+        order by updateTime desc
+    </select>
+
+    <update id="updateTime" parameterType="com.htw.vbbs.domain.Store">
+        update store
+        set updateTime = #{updateTime}
+        where invitationId = #{invitationId}
+    </update>
+
+    <delete id="deleteArt" parameterType="java.lang.Integer">
+        delete
+        from store
+        where invitationId = #{id}
+    </delete>
 
 </mapper>

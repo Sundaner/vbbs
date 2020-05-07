@@ -2,13 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.htw.vbbs.dao.InterestMapper">
     <resultMap id="ResultMap" type="com.htw.vbbs.domain.Interest">
-
+        <id column="interestId" property="interestId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="master" property="master" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List" >
-
+        interestId, userId, master
     </sql>
 
+    <select id="getMyInterest" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select master from interest
+        where userId = #{userId}
+    </select>
 
+    <insert id="interest" parameterType="com.htw.vbbs.domain.Interest">
+        insert into interest(userId, master)
+        values (#{userId} , #{master})
+    </insert>
+
+    <delete id="cancelInterest" parameterType="com.htw.vbbs.domain.Interest">
+        delete from interest
+        where userId = #{userId} and master = #{master}
+    </delete>
+
+    <select id="hasInterest" parameterType="com.htw.vbbs.domain.Interest" resultMap="ResultMap">
+        select interestId
+        from interest
+        where userId = #{userId} and master = #{master}
+    </select>
 
 </mapper>

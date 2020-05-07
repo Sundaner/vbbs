@@ -10,6 +10,39 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
     <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <style type="text/css">
+        .blog-title {
+            font-size: 30px;
+            color: #1E9FFF;
+            margin-right: 20px;
+        }
+        .high-title{
+            line-height: 80px;
+            height: 80px;
+            border-color: #c0c4cc
+        }
+        .user-card{
+            width: 210px;
+            background-color: #fff;
+        }
+        .pname{
+            margin: 0 auto;
+        }
+        .left-p{
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+            border-radius: 0.5;
+        }
+        .right-name{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .btn-padd{
+            padding: 0 30px;
+        }
+    </style>
 </head>
 <body>
 <ul th:replace="common/header::copy"></ul>
@@ -17,15 +50,13 @@
     <div class="main-container">
         <div class="left-container">
             <div class="layui-card">
-                <div class="high layui-card-header">
-                    <ul class="white layui-nav">
-                        <li class="black layui-nav-item layui-this"><a href="/home">最新</a></li>
-                        <li class="black layui-nav-item"><a href="/home?type=1">交流</a></li>
-                        <li class="black layui-nav-item"><a href="/home?type=2">电影说</a></li>
-                        <li class="black layui-nav-item"><a href="/home?type=3">音乐说</a></li>
-                        <li class="black layui-nav-item"><a href="/home?type=4">游戏说</a></li>
-                        <li class="black layui-nav-item"><a href="/home?type=5">其他</a></li>
-                    </ul>
+                <div class="layui-card-header high-title">
+                    <h2>
+                        <p>
+                            <i class="layui-icon layui-icon-rate blog-title"></i>
+                            <span>我的收藏</span>
+                        </p>
+                    </h2>
                 </div>
                 <div class="layui-card-body">
                     <ul>
@@ -61,16 +92,16 @@
     </div>
 </div>
 
-<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:inline="javascript">
     layui.use('element', function(){
         var element = layui.element;
+
         element.on('nav(demo)', function(elem){
             //console.log(elem)
             layer.msg(elem.text());
         });
     });
-
     layui.use('laypage', function(){
         var laypage = layui.laypage;
         laypage.render({
@@ -80,13 +111,11 @@
             curr: [[${pageInfo.pageNum}]],
             jump: function(obj, first){
                 if(!first){
-                    window.location.href="/home?pageNum="+ obj.curr
+                    window.location.href="/user/mycollect?pageNum="+ obj.curr
                 }
             }
         });
     });
-
 </script>
-
 </body>
 </html>

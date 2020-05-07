@@ -1,8 +1,10 @@
 package com.htw.vbbs.service;
 
 
+import com.htw.vbbs.dao.InvitationMapper;
 import com.htw.vbbs.domain.Invitation;
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.asn1.cms.PasswordRecipientInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -19,6 +22,8 @@ public class InvitationServiceTest {
 
     @Autowired
     private InvitationService service;
+    @Autowired
+    private InvitationMapper invitationMapper;
 
     @Test
     public void testInsert(){
@@ -46,6 +51,40 @@ public class InvitationServiceTest {
     public void testgetInviComments(){
         Invitation in = service.findInviComments(219);
         System.out.println(in);
+    }
+
+    @Test
+    public void testGetAll(){
+        List<Invitation> in = invitationMapper.getAll(2);
+        System.out.println(in.size());
+    }
+
+    @Test
+    public void testZan(){
+        int userId = 101;
+        int invitaionId = 219;
+        service.zan(userId, invitaionId);
+    }
+
+    @Test
+    public void testStore(){
+        int userId = 101;
+        int invitaionId = 219;
+        service.store(userId, invitaionId);
+    }
+
+    @Test
+    public void testcZan(){
+        int userId = 101;
+        int invitaionId = 219;
+        service.cancelZan(userId, invitaionId);
+    }
+
+    @Test
+    public void testcStore(){
+        int userId = 101;
+        int invitaionId = 219;
+        service.cancelStore(userId, invitaionId);
     }
 }
 

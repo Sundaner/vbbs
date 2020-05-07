@@ -9,5 +9,4 @@ public class Zan {
     private int zanId;
     private int userId;
     private int invitationId;
-    private Timestamp createTime;
 }

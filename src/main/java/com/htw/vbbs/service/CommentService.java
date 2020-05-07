@@ -100,4 +100,8 @@ public class CommentService {
         });
         return commentViews;
     }
+
+    public int deleteArt(int id) {
+        return commentMapper.deleteArt(id);
+    }
 }

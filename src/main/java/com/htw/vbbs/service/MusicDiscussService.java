@@ -20,7 +20,7 @@ public class MusicDiscussService {
     @Autowired
     private UserService userService;
 
-    public List<MusicDiscuss> getMusicDiscussList(long id) {
+    public List<MusicDiscuss> getMusicDiscussList(int id) {
         return musicDiscussMapper.getMusicDisList(id);
     }
 

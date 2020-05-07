@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <style type="text/css">
+        .chat-title{
+            padding-top: 10px;
+        }
+        .text{
+            margin-top: 20px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<ul th:replace="common/header::copy"></ul>
+<div class="container">
+    <div class="main-container">
+        <div class="left-container">
+            <div class="layui-card">
+                <div class="high layui-card-header">
+                    <h2 class="chat-title">发送私信</h2>
+                </div>
+                <div class="layui-card-body">
+                    <span>私信给：</span>
+                    <span th:text="${touser.nickname}"></span>
+
+                    <div class="text">
+                        <textarea  class="layui-textarea" id="message"></textarea>
+                    </div>
+                    <button type="button" class="layui-btn" onclick="send()">发送</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+    layui.use('element', function(){
+        var element = layui.element;
+        element.on('nav(demo)', function(elem){
+            layer.msg(elem.text());
+        });
+    });
+    function send() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            var id = [[${touser.userId}]];
+            var content = $('#message').val();
+            if(content){
+               content = content.trim();
+            }
+            if(content==''||content==null){
+                layer.msg("内容不能为空！");
+            }
+            else {
+                $.ajax({
+                    url:"/message/send",
+                    type:"POST",
+                    dataType: "json",
+                    data: "id="+id+"&content="+content,
+                    success: function(result){
+                        if (result.code == 0) {
+                            layer.msg("发送成功");
+                        } else {
+                            layer.msg(result.msg);
+                        }
+                        $('#message').val('');
+                    }
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.htw.vbbs.dao.MusicDiscussMapper">
     <resultMap id="ResultMap" type="com.htw.vbbs.domain.MusicDiscuss">
-        <id column="musicDisId" property="musicDisid" jdbcType="INTEGER"/>
-        <result column="musicId" property="musicid" jdbcType="VARCHAR"/>
+        <id column="musicDisId" property="musicDisId" jdbcType="INTEGER"/>
+        <result column="musicId" property="musicId" jdbcType="INTEGER"/>
         <result column="userId" property="userId" jdbcType="INTEGER"/>
         <result column="replyId" property="replyId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
@@ -22,7 +22,15 @@
         order by createTime desc
     </select>
 
-    <insert id="inerstNew" parameterType="com.htw.vbbs.domain.MusicDiscuss" useGeneratedKeys="true" keyProperty="musicDisid" keyColumn="musicDisid">
+    <select id="getMusicDisList" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from musicdiscuss
+        where musicId = #{id}
+        order by createTime desc
+    </select>
+
+    <insert id="inerstNew" parameterType="com.htw.vbbs.domain.MusicDiscuss" useGeneratedKeys="true" keyProperty="musicDisId" keyColumn="musicDisId">
       INSERT INTO musicdiscuss (musicId, userId, content
         , createTime, replyId)
       VALUES (#{musicId}, #{userId}, #{content}, #{createTime},

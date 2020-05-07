@@ -25,6 +25,15 @@
             margin-top: 15px;
         }
     </style>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        var art = [[${article.content}]];
+        var type = [[${article.type}]];
+        $(document).ready(function () {
+            $('#type').find("option").eq(type).prop("selected",true)
+            $('#edit').html(art);
+        })
+    </script>
 </head>
 <body>
 <ul th:replace="common/header::copy"></ul>
@@ -39,20 +48,22 @@
                     <form class="layui-form" action="">
                         <div class="layui-form-item">
                             <div class="edit layui-input-block layui-inline inline-long1">
-                                <input type="text" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                <input type="text" id="title" required  lay-verify="required"  autocomplete="off" class="layui-input"
+                                th:value="${article.title}">
                             </div>
                             <div class="edit layui-input-block layui-inline inline-long2">
                                 <select name="type" lay-verify="required" id="type">
                                     <option value=""></option>
-                                    <option value="0">交流</option>
-                                    <option value="1">电影说</option>
-                                    <option value="2">音乐说</option>
-                                    <option value="3">游戏说</option>
-                                    <option value="4">其他</option>
+                                    <option value="1">交流</option>
+                                    <option value="2">电影说</option>
+                                    <option value="3">音乐说</option>
+                                    <option value="4">游戏说</option>
+                                    <option value="5">其他</option>
                                 </select>
                             </div>
                         </div>
-                        <div id = "edit"></div>
+                        <div id = "edit">
+                        </div>
                         <div class="layui-form-item">
                             <div class="edit layui-input-block mar-top">
                                 <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn1">立即提交</button>
@@ -63,10 +74,9 @@
             </div>
         </div>
         <div th:replace="common/right::copy">
+        </div>
     </div>
-</div>
 </body>
-<script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/wangEditor.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script>
@@ -81,6 +91,7 @@
     layui.use('form', function () {
         var form = layui.form;
         var layer = layui.layer;
+        var id = location.search.slice(4);
         form.on('submit(formDemo)', function(data){
             var invitation = {
                 title: $("#title").val(),
@@ -88,18 +99,18 @@
                 content: editor.txt.html()
             }
             $.ajax({
-                url:"/articles/submit",
+                url:"/articles/update?id="+id,
                 type:"POST",
                 contentType: "application/x-www-form-urlencoded",
                 data:invitation,
                 success: function (result) {
                     console.log(result);
                     if (result.code == 0) {
-                        layer.msg('文章发布成功！', {
+                        layer.msg('文章修改成功！', {
                             icon: 1,
                             time: 2000
                         }, function(){
-                            window.location.href = "/articles/info?id=" + result.data;
+                            window.location.href = "/articles/info?id=" + id;
                         });
                     } else {
                         layer.msg(result.msg);

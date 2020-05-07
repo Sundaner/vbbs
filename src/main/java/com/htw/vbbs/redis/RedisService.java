@@ -30,7 +30,7 @@ public class RedisService {
             T t =  stringToBean(str, clazz);
             return t;
         } finally {
-            log.info(str);
+//            log.info(str);
             returnToPool(jedis);
         }
     }

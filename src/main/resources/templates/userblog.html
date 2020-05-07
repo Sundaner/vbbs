@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="referrer" content="never">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
+    <style type="text/css">
+        .blog-title {
+            font-size: 30px;
+            color: #1E9FFF;
+            margin-right: 20px;
+        }
+        .high-title{
+            line-height: 80px;
+            height: 80px;
+            border-color: #c0c4cc
+        }
+        .user-card{
+            width: 210px;
+            background-color: #fff;
+        }
+        .pname{
+            margin: 0 auto;
+        }
+        .left-p{
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+        }
+        .right-name{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .btn-padd{
+            padding: 0 30px;
+        }
+    </style>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var hasInter = [[${hasInter}]];
+            if(hasInter == 1){
+                $('#intbtn').text("已关注");
+            }
+
+        })
+    </script>
+</head>
+<body>
+<ul th:replace="common/header::copy"></ul>
+<div class="container">
+    <div class="main-container">
+        <div class="left-container">
+            <div class="layui-card">
+                <div class="layui-card-header high-title">
+                    <h2>
+                        <p>
+                            <i class="layui-icon layui-icon-read blog-title"></i>
+                            <span>所有文章</span>
+                        </p>
+                    </h2>
+                </div>
+                <div class="layui-card-body">
+                    <ul>
+                        <li class="li-item" th:each="p:${pageInfo.list}">
+                            <div class="li-item-header">
+                                <div class="li-item-center">
+                                    <h1 class="li-title">
+                                        <a th:text="${p.title}" th:href="'/articles/info?id='+ ${p.invitationId}"></a>
+                                    </h1>
+                                    <div class="li-meta">
+                                        <span class="meta-item" th:text="${p.updateTime}"></span>
+                                        <span class="meta-item-type" th:text="${p.trueType}"></span>
+                                    </div>
+                                </div>
+                                <div class="li-item-right">
+                                    <img th:src="@{/img/zan.svg}">
+                                    <span class="zan-count" th:text="${p.zan}"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="paginator"></div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="common/blog::copy">
+    </div>
+</div>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+    layui.use('element', function(){
+        var element = layui.element;
+
+        element.on('nav(demo)', function(elem){
+            layer.msg(elem.text());
+        });
+    });
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        var buserId = [[${buser.userId}]];
+        laypage.render({
+            elem: 'paginator',
+            limit: 20,
+            count: [[${pageInfo.total}]],
+            curr: [[${pageInfo.pageNum}]],
+            jump: function(obj, first){
+                if(!first){
+                    window.location.href="/user/blog?id="+ buserId +"&pageNum="+ obj.curr
+                }
+            }
+        });
+    });
+    function interest(elem){
+        var val = $(elem).next('span').text();
+        var userId = $(elem).next('span').next('span').text();
+
+        $.ajax({
+            url:"/user/interest",
+            type:"POST",
+            dataType: "json",
+            data: "id="+userId+"&flag="+val,
+            success: function(result){
+                if (result.code == 0) {
+                    if(val == 0){
+                        $(elem).text('已关注');
+                        $(elem).next('span').text(1);
+                    }else {
+                        $(elem).text('关注');
+                        $(elem).next('span').text(0);
+                    }
+                } else {
+                    layer.msg(result.msg);
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

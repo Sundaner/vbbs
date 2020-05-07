@@ -78,4 +78,67 @@
         ORDER BY cTime DESC ;
     </select>
 
+
+    <select id="getAll" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        invitationId, title, type ,updateTime, zan, userId
+        from invitation
+        <if test='_parameter != "0"'>
+            where type = #{type}
+        </if>
+        order by updateTime desc
+    </select>
+
+    <select id="getSimpInvById" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        invitationId, title, type ,updateTime, zan, userId
+        from invitation
+        where invitationId = #{id}
+    </select>
+
+    <select id="getUpdateTimeByid" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select updateTime
+        from invitation
+        where invitationId = #{id}
+    </select>
+
+    <select id="getUserInvis" resultMap="ResultMap" parameterType="java.lang.Integer" >
+        select
+        invitationId, title, type ,updateTime, zan
+        from invitation
+        where userId = #{id}
+        order by updateTime desc
+    </select>
+
+    <update id="zan" parameterType="java.lang.Integer" >
+        update invitation set zan = zan +1
+        where invitationId = #{invitationid}
+    </update>
+
+    <update id="cancelZan" parameterType="java.lang.Integer" >
+        update invitation set zan = zan - 1
+        where invitationId = #{invitationId}
+    </update>
+
+    <update id="store" parameterType="java.lang.Integer" >
+        update invitation set store = store + 1
+        where invitationId = #{invitationid}
+    </update>
+
+    <update id="cancelStore" parameterType="java.lang.Integer" >
+        update invitation set store = store - 1
+        where invitationId = #{invitationId}
+    </update>
+
+    <update id="updateTime" parameterType="com.htw.vbbs.domain.Invitation">
+        update invitation
+        set title = #{title}, type = #{type}, content = #{content} ,updateTime = #{updateTime}
+        where invitationId = #{invitationId}
+    </update>
+
+    <delete id="deleteArt" parameterType="java.lang.Integer">
+        delete
+        from invitation
+        where invitationId = #{id}
+    </delete>
 </mapper>

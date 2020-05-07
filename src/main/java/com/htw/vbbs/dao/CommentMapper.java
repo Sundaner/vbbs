@@ -16,4 +16,6 @@ public interface CommentMapper {
     int inerstNew(Comment comment);
 
     List<Comment> getComments(int invitationId);
+
+    int deleteArt(int id);
 }

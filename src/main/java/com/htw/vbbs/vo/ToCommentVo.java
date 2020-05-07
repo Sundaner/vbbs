@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ToCommentVo {
-    int invitationId;
-    int commentId;
-    String content;
+    private int invitationId;
+    private int commentId;
+    private String content;
 }

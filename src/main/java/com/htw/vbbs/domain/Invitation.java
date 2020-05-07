@@ -16,5 +16,7 @@ public class Invitation {
     private int type;
     private Timestamp createTime;
     private Timestamp updateTime;
+    private String trueType;
     private List<Comment> commentList;
+
 }

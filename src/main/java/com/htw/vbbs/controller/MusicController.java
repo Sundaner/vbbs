@@ -1,11 +1,14 @@
 package com.htw.vbbs.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.htw.vbbs.Result.Result;
 import com.htw.vbbs.domain.GameDiscuss;
 import com.htw.vbbs.domain.MusicDiscuss;
+import com.htw.vbbs.domain.User;
 import com.htw.vbbs.music.model.MusicDetail;
 import com.htw.vbbs.music.model.Rank;
+import com.htw.vbbs.service.InterestService;
 import com.htw.vbbs.service.MusicDiscussService;
 import com.htw.vbbs.service.MusicService;
 import com.htw.vbbs.vo.GameDisVo;
@@ -30,41 +33,63 @@ public class MusicController {
     private MusicService musicService;
     @Autowired
     private MusicDiscussService musicDiscussService;
+    @Autowired
+    private InterestService interestService;
 
     @RequestMapping("/rank")
-    public String getMusicRank (Model model, HttpServletRequest request) {
+    public String getMusicRank (Model model, User user) {
         List<Rank> ranks = musicService.getRank();
+        List<User> inter = interestService.getMyInterest(user.getUserId());
+
+        model.addAttribute("inter", inter);
+        model.addAttribute("user", user);
         model.addAttribute("length",ranks.size());
         model.addAttribute("rank", ranks);
         return "music/musicRank";
     }
 
     @RequestMapping("/detail")
-    public String getMusicDetail (Model model, HttpServletRequest request, @RequestParam long id, @RequestParam String type,
+    public String getMusicDetail (Model model, User user, @RequestParam int id, @RequestParam String type,
                                   @RequestParam(defaultValue = "1",value = "pageNum")int pageNum) {
         MusicDetail detail = musicService.getMusicDetail(type, id);
 
+        PageHelper.startPage(pageNum, 20);
         List<MusicDiscuss> musicDiscusses = musicDiscussService.getMusicDiscussList(id);
         PageInfo<MusicDiscuss> page = new PageInfo<>(musicDiscusses);
+
         List<MusicDisVo> mvo = musicDiscussService.toDisVo(page.getList());
         PageInfo<MusicDisVo> pageInfo = new PageInfo<>(mvo);
         pageInfo.setPageNum(page.getPageNum());
         pageInfo.setTotal(page.getTotal());
+        List<User> inter = interestService.getMyInterest(user.getUserId());
 
+        model.addAttribute("inter", inter);
+        model.addAttribute("id", id);
+        model.addAttribute("type", type);
+        model.addAttribute("user", user);
         model.addAttribute("music", detail);
         model.addAttribute("pageInfo", pageInfo);
         return "music/musicDetail";
     }
 
     @RequestMapping("/search")
-    public String searchMusic (Model model, HttpServletRequest request, @RequestParam(defaultValue = "0", value = "id")int id) {
+    public String searchMusic (Model model, User user,
+                               @RequestParam(defaultValue = "0", value = "id")int id) {
+        List<User> inter = interestService.getMyInterest(user.getUserId());
+
+        model.addAttribute("inter", inter);
+        model.addAttribute("user", user);
         model.addAttribute("id",id);
         return "music/searchMusic";
     }
 
     @RequestMapping("/searchInfo")
-    public String getSearchResult (Model model, HttpServletRequest request, @RequestParam String value,
+    public String getSearchResult (Model model, User user, @RequestParam String value,
                                     @RequestParam(defaultValue = "0", value = "start")int start) {
+        List<User> inter = interestService.getMyInterest(user.getUserId());
+
+        model.addAttribute("inter", inter);
+        model.addAttribute("user", user);
         model.addAttribute("value", value);
         model.addAttribute("start",start);
         return "music/searchResult";
@@ -72,11 +97,11 @@ public class MusicController {
 
     @RequestMapping("/submit")
     @ResponseBody
-    public Result<MusicDisVo> doSubmit(ToMusDisVo tomusDisVo){
+    public Result<MusicDisVo> doSubmit(ToMusDisVo tomusDisVo, User user){
         int musicId = tomusDisVo.getMusicId();
         int disId = tomusDisVo.getDisId();
         String content = tomusDisVo.getContent();
-        int userId = 101;
+        int userId = user.getUserId();
         MusicDisVo vo = musicDiscussService.insert(musicId, disId, userId, content);
         return Result.success(vo);
     }

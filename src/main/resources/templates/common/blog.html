@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="right-container" th:fragment="copy">
+    <div class="user-card">
+        <ul>
+            <li class="li-item">
+                <div class="pname">
+                    <div class="left-p">
+                        <a href="">
+                            <img th:src="${buser.portrait}" class="li-avatar">
+                        </a>
+                    </div>
+                    <div class="right-name">
+                        <span th:text="${buser.nickname}"></span>
+                    </div>
+                </div>
+            </li>
+            <li class="li-item">
+                <span class="li-span" th:text="${buser.sign}"></span>
+            </li>
+            <li class="li-item">
+                <span class="li-span">文章总数：</span>
+                <span class="li-span" th:text="${pageInfo.total}"></span>
+            </li>
+            <li class="li-item">
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-primary btn-padd" id="intbtn" onclick="interest(this)">关注</button>
+                    <span style="display: none" th:text="${hasInter}"></span>
+                    <span style="display: none" th:text="${buser.userId}"></span>
+                    <a th:href="'/user/tochat?id=' + ${buser.userId}">
+                        <button type="button" class="layui-btn layui-btn-primary btn-padd">私信</button>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
