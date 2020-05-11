@@ -1,7 +1,7 @@
 package com.htw.vbbs.service;
 
-import com.htw.vbbs.Exception.GlobalException;
-import com.htw.vbbs.Result.CodeMsg;
+import com.htw.vbbs.exception.GlobalException;
+import com.htw.vbbs.result.CodeMsg;
 import com.htw.vbbs.config.UserArgResolver;
 import com.htw.vbbs.dao.UserMapper;
 import com.htw.vbbs.domain.User;

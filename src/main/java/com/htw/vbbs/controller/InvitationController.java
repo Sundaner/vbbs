@@ -2,7 +2,7 @@ package com.htw.vbbs.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.htw.vbbs.Result.Result;
+import com.htw.vbbs.result.Result;
 import com.htw.vbbs.domain.Comment;
 import com.htw.vbbs.domain.Invitation;
 import com.htw.vbbs.domain.User;

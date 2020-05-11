@@ -3,8 +3,7 @@ package com.htw.vbbs.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.htw.vbbs.Result.Result;
-import com.htw.vbbs.domain.GameDiscuss;
+import com.htw.vbbs.result.Result;
 import com.htw.vbbs.domain.MovieDiscuss;
 import com.htw.vbbs.domain.User;
 import com.htw.vbbs.service.InterestService;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller

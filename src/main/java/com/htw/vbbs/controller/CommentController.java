@@ -1,6 +1,6 @@
 package com.htw.vbbs.controller;
 
-import com.htw.vbbs.Result.Result;
+import com.htw.vbbs.result.Result;
 import com.htw.vbbs.domain.User;
 import com.htw.vbbs.service.CommentService;
 import com.htw.vbbs.vo.CommentView;

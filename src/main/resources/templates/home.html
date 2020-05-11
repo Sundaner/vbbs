@@ -62,7 +62,11 @@
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/websocket.js}"></script>
 <script th:inline="javascript">
+    var userId = [[${user.userId}]]
+    window.onload = initWebSocket(userId);
     layui.use('element', function(){
         var element = layui.element;
         element.on('nav(demo)', function(elem){

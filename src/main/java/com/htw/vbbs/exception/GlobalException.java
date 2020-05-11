@@ -1,7 +1,7 @@
-package com.htw.vbbs.Exception;
+package com.htw.vbbs.exception;
 
 
-import com.htw.vbbs.Result.CodeMsg;
+import com.htw.vbbs.result.CodeMsg;
 
 public class GlobalException extends RuntimeException{
 

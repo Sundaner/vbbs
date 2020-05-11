@@ -1,7 +1,7 @@
-package com.htw.vbbs.Exception;
+package com.htw.vbbs.exception;
 
-import com.htw.vbbs.Result.CodeMsg;
-import com.htw.vbbs.Result.Result;
+import com.htw.vbbs.result.CodeMsg;
+import com.htw.vbbs.result.Result;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;

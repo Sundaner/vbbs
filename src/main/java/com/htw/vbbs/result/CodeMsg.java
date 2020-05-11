@@ -1,4 +1,4 @@
-package com.htw.vbbs.Result;
+package com.htw.vbbs.result;
 
 public class CodeMsg {
     private int code;

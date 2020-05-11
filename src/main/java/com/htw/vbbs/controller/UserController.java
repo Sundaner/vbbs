@@ -2,9 +2,8 @@ package com.htw.vbbs.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.htw.vbbs.Result.CodeMsg;
-import com.htw.vbbs.Result.Result;
-import com.htw.vbbs.domain.Comment;
+import com.htw.vbbs.result.CodeMsg;
+import com.htw.vbbs.result.Result;
 import com.htw.vbbs.domain.Invitation;
 import com.htw.vbbs.domain.Store;
 import com.htw.vbbs.domain.User;
@@ -31,9 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
