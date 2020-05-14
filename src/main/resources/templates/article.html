@@ -7,22 +7,26 @@
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/comment.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/comment.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/toastr.min.css}" media="all">
     <style type="text/css">
         .art-t-header {
             height: auto;
             padding: 20px 0 10px 20px
         }
+
         .art-t-span {
             color: #adb1af;
         }
+
         .zan-collect {
             margin-top: 30px;
         }
-        .art-count{
+
+        .art-count {
             font-size: 12px;
             color: #fff;
             background: #aab0c6;
@@ -31,17 +35,20 @@
             font-weight: 700;
             margin-right: 30px;
         }
-        .span-pointer{
+
+        .span-pointer {
             cursor: pointer;
         }
+
         .ed {
             background-color: #74ca46
         }
+
         .none {
             display: none;
         }
 
-</style>
+    </style>
     <script th:src="@{/js/jquery.min.js}"></script>
     <script type="text/javascript" th:inline="javascript">
         var art = [[${article.content}]];
@@ -49,17 +56,18 @@
             $('#article').html(art);
             var zan = [[${zan}]];
             var store = [[${store}]];
-            if(zan == 1){
+            if (zan == 1) {
                 $('#zannum').addClass('ed');
             }
-            if(store == 1){
+            if (store == 1) {
                 $('#storenum').addClass('ed');
             }
         })
     </script>
 </head>
 <body>
-<<ul th:replace="common/header::copy"></ul>
+<
+<ul th:replace="common/header::copy"></ul>
 <div class="container">
     <div class="main-container">
         <div class="left-container">
@@ -69,9 +77,9 @@
                         <h2 th:text="${article.title}"></h2>
                     </div>
                     <div>
-                        <span class="art-t-span" >发布于</span>
+                        <span class="art-t-span">发布于</span>
                         <span class="art-t-span" th:text="${article.createTime}"></span>
-                        <span class="art-t-span" >&nbsp/&nbsp 更新于</span>
+                        <span class="art-t-span">&nbsp/&nbsp 更新于</span>
                         <span class="art-t-span" th:text="${article.updateTime}"></span>
                     </div>
                 </div>
@@ -94,31 +102,36 @@
             <div th:replace="common/comment::copy"></div>
         </div>
         <div th:replace="common/right::copy">
+        </div>
     </div>
 </div>
-
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:src="@{/js/comment.js}"></script>
+<script th:src="@{/js/connect.js}"></script>
 <script th:inline="javascript">
+    var userId = [[${user.userId}]]
+    window.onload = connect(userId);
     var commentId = 0;
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
-        element.on('nav(demo)', function(elem){
+        element.on('nav(demo)', function (elem) {
             layer.msg(elem.text());
         });
     });
 
-    layui.use('laypage', function(){
+    layui.use('laypage', function () {
         var laypage = layui.laypage;
         var id = [[${article.invitationId}]];
         laypage.render({
             elem: 'paginator',
-            limit:20,
+            limit: 20,
             count: [[${pageInfo.total}]],
             curr: [[${pageInfo.pageNum}]],
-            jump: function(obj, first){
-                if(!first){
-                    window.location.href="/articles/info?id=" + id + "&pageNum=" + obj.curr
+            jump: function (obj, first) {
+                if (!first) {
+                    window.location.href = "/articles/info?id=" + id + "&pageNum=" + obj.curr
                 }
             }
         });
@@ -128,19 +141,19 @@
         var form = layui.form;
 
         var invitationId = [[${article.invitationId}]];
-        form.on('submit(formDemo)', function(data){
+        form.on('submit(formDemo)', function (data) {
             var content = data['field']['comt'];
             var fdata = {
-                content:content,
-                commentId:commentId,
-                invitationId:invitationId
+                content: content,
+                commentId: commentId,
+                invitationId: invitationId
             }
             $.ajax({
-                url:"/comment/submit",
-                type:"POST",
+                url: "/comment/submit",
+                type: "POST",
                 dataType: "json",
                 data: fdata,
-                success: function(result){
+                success: function (result) {
                     cancel();
                     if (result.code == 0) {
                         layer.msg('评论成功！');
@@ -155,28 +168,28 @@
         });
     });
 
-    function zan(elem){
+    function zan(elem) {
         var id = [[${article.invitationId}]];
         var flag = $(elem).prev('span').text();
         var val = $(elem).next('span').text();
 
         $.ajax({
-            url:"/articles/zan",
-            type:"POST",
+            url: "/articles/zan",
+            type: "POST",
             dataType: "json",
-            data: "id="+id+"&flag="+flag,
-            success: function(result){
+            data: "id=" + id + "&flag=" + flag,
+            success: function (result) {
                 if (result.code == 0) {
-                    if(flag == 0){
+                    if (flag == 0) {
                         layer.msg("点赞成功")
                         $(elem).next('span').addClass('ed');
                         $(elem).prev('span').text(1);
-                        $(elem).next('span').text(parseInt(val)  + 1);
-                    }else {
+                        $(elem).next('span').text(parseInt(val) + 1);
+                    } else {
                         layer.msg("取消点赞");
                         $(elem).next('span').removeClass('ed');
                         $(elem).prev('span').text(0);
-                        $(elem).next('span').text(parseInt(val)  - 1);
+                        $(elem).next('span').text(parseInt(val) - 1);
                     }
                 } else {
                     layer.msg(result.msg);
@@ -184,28 +197,29 @@
             }
         });
     }
-    function collect(elem){
+
+    function collect(elem) {
         var id = [[${article.invitationId}]];
         var flag = $(elem).prev('span').text();
         var val = $(elem).next('span').text();
 
         $.ajax({
-            url:"/articles/store",
-            type:"POST",
+            url: "/articles/store",
+            type: "POST",
             dataType: "json",
-            data: "id="+id+"&flag="+flag,
-            success: function(result){
+            data: "id=" + id + "&flag=" + flag,
+            success: function (result) {
                 if (result.code == 0) {
-                    if(flag == 0){
+                    if (flag == 0) {
                         layer.msg("收藏成功");
                         $(elem).next('span').addClass('ed');
                         $(elem).prev('span').text(1);
-                        $(elem).next('span').text(parseInt(val)  + 1);
-                    }else {
+                        $(elem).next('span').text(parseInt(val) + 1);
+                    } else {
                         layer.msg("取消收藏");
                         $(elem).next('span').removeClass('ed');
                         $(elem).prev('span').text(0);
-                        $(elem).next('span').text(parseInt(val)  - 1);
+                        $(elem).next('span').text(parseInt(val) - 1);
                     }
                 } else {
                     layer.msg(result.msg);

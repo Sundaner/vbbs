@@ -7,42 +7,50 @@
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/toastr.min.css}" media="all">
     <style type="text/css">
         .blog-title {
             font-size: 30px;
             color: #1E9FFF;
             margin-right: 20px;
         }
-        .high-title{
+
+        .high-title {
             line-height: 80px;
             height: 80px;
             border-color: #c0c4cc
         }
-        .user-card{
+
+        .user-card {
             width: 210px;
             background-color: #fff;
         }
-        .pname{
+
+        .pname {
             margin: 0 auto;
         }
-        .left-p{
+
+        .left-p {
             width: 60px;
             height: 60px;
             margin: 0 auto;
             border-radius: 0.5;
         }
-        .right-name{
+
+        .right-name {
             margin-top: 10px;
             margin-bottom: 10px;
             text-align: center;
         }
-        .btn-padd{
+
+        .btn-padd {
             padding: 0 30px;
         }
-        .a-edit{
+
+        .a-edit {
             margin-right: 20px
         }
     </style>
@@ -75,7 +83,7 @@
                                     </div>
                                 </div>
                                 <div class="li-item-right">
-                                    <a class="a-edit"  th:href="'/articles/edit?id='+ ${p.invitationId}">编辑</a>
+                                    <a class="a-edit" th:href="'/articles/edit?id='+ ${p.invitationId}">编辑</a>
                                     <a onclick="deleteNotice(this)">删除</a>
                                     <span class="none" th:text="${p.invitationId}"></span>
                                 </div>
@@ -87,50 +95,55 @@
             </div>
         </div>
         <div th:replace="common/right::copy">
+        </div>
     </div>
 </div>
-
 <script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/js/connect.js}"></script>
 <script th:inline="javascript">
-    layui.use('element', function(){
+    var userId = [[${user.userId}]]
+    window.onload = connect(userId);
+    layui.use('element', function () {
         var element = layui.element;
 
         //监听导航点击
-        element.on('nav(demo)', function(elem){
+        element.on('nav(demo)', function (elem) {
             //console.log(elem)
             layer.msg(elem.text());
         });
     });
-    layui.use('laypage', function(){
+    layui.use('laypage', function () {
         var laypage = layui.laypage;
         laypage.render({
             elem: 'paginator',
             limit: 20,
             count: [[${pageInfo.total}]],
             curr: [[${pageInfo.pageNum}]],
-            jump: function(obj, first){
-                if(!first){
-                    window.location.href="/myArticle?pageNum="+ obj.curr
+            jump: function (obj, first) {
+                if (!first) {
+                    window.location.href = "/myArticle?pageNum=" + obj.curr
                 }
             }
         });
     });
-    function deleteNotice(elem){
+
+    function deleteNotice(elem) {
         var id = $(elem).next('span').eq(0).text();
         console.log(id);
-        layui.use('layer', function(){
+        layui.use('layer', function () {
             var layer = layui.layer;
             layer.open({
                 content: "删除文章将无法找回，你还要继续删除吗？",
-                btn: ['继续删除','取消'],
-                yes: function(index, layero){
+                btn: ['继续删除', '取消'],
+                yes: function (index, layero) {
                     $.ajax({
-                        url:"/articles/delete",
-                        type:"POST",
+                        url: "/articles/delete",
+                        type: "POST",
                         dataType: "json",
-                        data: "id="+id,
-                        success: function(result){
+                        data: "id=" + id,
+                        success: function (result) {
                             layer.close(index);
                             if (result.code == 0) {
                                 layer.msg("删除成功");
@@ -141,8 +154,10 @@
                     });
 
                 },
-                btn2: function(index, layero) {},
-                cancel: function(index,layero){},
+                btn2: function (index, layero) {
+                },
+                cancel: function (index, layero) {
+                },
             })
         });
     }

@@ -32,7 +32,7 @@ public class MessageController {
     @ResponseBody
     public Result<Boolean> sendMessage(User user, @RequestParam int id,
                                        @RequestParam String content){
-        int re = messageService.send(user.getUserId(), id, content);
+        int re = messageService.send(user.getUserId(), user.getNickname(), id, content);
         return Result.success(true);
     }
 

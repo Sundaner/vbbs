@@ -97,18 +97,12 @@ public class SocketServer {
      * @param message
      * @param userId
      */
-    public synchronized static void sendMessage(String message, int userId) {
-
-        socketServers.forEach((k, v) ->{
-            if (userId == k) {
-                try {
-                    v.getBasicRemote().sendText(message);
-                    logger.info("推送给客户端 :【{}】" , k, message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    public synchronized static void sendMessage(String message, int userId){
+        try {
+            socketServers.get(userId).getBasicRemote().sendText(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -123,9 +117,8 @@ public class SocketServer {
         }
     }
 
-    public synchronized static boolean hasOnline(String message,int userId) {
-        Session session = socketServers.get(userId);
-        if(session != null){
+    public synchronized static boolean hasOnline(int userId) {
+        if(socketServers.containsKey(userId)){
             return true;
         }
         return false;

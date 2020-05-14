@@ -4,6 +4,7 @@ import com.htw.vbbs.dao.MessageMapper;
 import com.htw.vbbs.domain.Message;
 import com.htw.vbbs.domain.User;
 import com.htw.vbbs.vo.MessageVo;
+import com.htw.vbbs.websocket.SocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class MessageService {
     @Autowired
     private UserService userService;
 
-    public int send(int userId, int id, String content) {
+    public int send(int userId, String name, int id, String content) {
         Message message = new Message();
         message.setContent(content);
         message.setSenderId(userId);
@@ -28,6 +29,10 @@ public class MessageService {
         Timestamp timeStamp = new Timestamp(date.getTime());
         message.setCreateTime(timeStamp);
         message.setStatus(0);
+        if(SocketServer.hasOnline(id)){
+            String notify = "用户" + name + "给你发送一一条私信，看去看看吧！";
+            SocketServer.sendMessage(notify, id);
+        }
         return messageMapper.sendMessage(message);
     }
 

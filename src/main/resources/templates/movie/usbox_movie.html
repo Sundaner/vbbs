@@ -7,11 +7,12 @@
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/toastr.min.css}" media="all">
     <style type="text/css">
-        .movie-soon{
+        .movie-soon {
             display: flex;
             flex: 1;
             margin: 0 auto;
@@ -21,21 +22,26 @@
             margin-bottom: 20px;
             border-bottom: 1px solid #f2f2f2;
         }
+
         .movie-soon-left {
             display: flex;
             width: 60%;
         }
+
         .movie-soon-right {
             display: flex;
             flex: 1;
             width: 50%;
         }
+
         .intro {
             margin-left: 15px;
         }
+
         .ul-top {
             margin-top: 20px;
         }
+
         .img-size {
             width: 100px;
             height: 150px;
@@ -89,14 +95,19 @@
             </div>
         </div>
         <div th:replace="common/right::copy">
+        </div>
     </div>
 </div>
-
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<script>
-    layui.use('element', function(){
+<script th:src="@{/js/connect.js}"></script>
+<script th:inline="javascript">
+    var userId = [[${user.userId}]]
+    window.onload = connect(userId);
+    layui.use('element', function () {
         var element = layui.element;
-        element.on('nav(demo)', function(elem){
+        element.on('nav(demo)', function (elem) {
             layer.msg(elem.text());
         });
     });

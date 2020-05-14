@@ -7,11 +7,12 @@
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/toastr.min.css}" media="all">
     <style type="text/css">
-        .music-rank{
+        .music-rank {
             display: flex;
             flex: 1;
             margin: 0 auto;
@@ -21,24 +22,29 @@
             padding-bottom: 20px;
             border-bottom: 1px solid #f2f2f2;
         }
+
         .music-rank-left {
             display: flex;
             width: 50%;
             border-left: 1px solid #f2f2f2;
         }
+
         .music-rank-right {
             display: flex;
             flex: 1;
             width: 50%;
             border-left: 1px solid #f2f2f2;
         }
+
         .intro {
             margin-left: 15px;
         }
-        .music-ol{
+
+        .music-ol {
             margin-top: 20px;
             margin-left: 15px;
         }
+
         .m-span-left {
             padding-left: 10px;
             width: 150px;
@@ -47,12 +53,14 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         .m-span-right {
             padding-left: 10px;
             width: 100px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .li-a {
             color: blue;
         }
@@ -74,7 +82,8 @@
                                 <h2 th:text="${rank[i].name}"></h2>
                                 <ol class="music-ol">
                                     <li style="list-style: decimal;" th:each="b:${rank[i].content}">
-                                        <a th:href="'/music/detail?type='+${rank[i].type}+'&id='+${b.song_id}" class="li-a" th:title="${b.title}">
+                                        <a th:href="'/music/detail?type='+${rank[i].type}+'&id='+${b.song_id}"
+                                           class="li-a" th:title="${b.title}">
                                             <span class="m-span-left" th:text="${b.title}"></span>
                                         </a>
                                         <a th:title="${b.author}">
@@ -89,7 +98,8 @@
                                 <h2 th:text="${rank[i+1].name}"></h2>
                                 <ol class="music-ol">
                                     <li style="list-style: decimal;" th:each="c:${rank[i+1].content}">
-                                        <a th:href="'/music/detail?type='+${rank[i+1].type}+'&id='+${c.song_id}" class="li-a" th:title="${c.title}">
+                                        <a th:href="'/music/detail?type='+${rank[i+1].type}+'&id='+${c.song_id}"
+                                           class="li-a" th:title="${c.title}">
                                             <span class="m-span-left" th:text="${c.title}"></span>
                                         </a>
                                         <a th:title="${c.author}">
@@ -104,16 +114,21 @@
             </div>
         </div>
         <div th:replace="common/right::copy">
+        </div>
     </div>
 </div>
-
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<script>
-    layui.use('element', function(){
+<script th:src="@{/js/connect.js}"></script>
+<script th:inline="javascript">
+    var userId = [[${user.userId}]]
+    window.onload = connect(userId);
+    layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
         //监听导航点击
-        element.on('nav(demo)', function(elem){
+        element.on('nav(demo)', function (elem) {
             //console.log(elem)
             layer.msg(elem.text());
         });

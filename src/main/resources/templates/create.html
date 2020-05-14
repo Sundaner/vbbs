@@ -7,20 +7,24 @@
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/home.css}"  media="all">
-    <link rel="stylesheet" th:href="@{/css/right.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/toastr.min.css}" media="all">
     <style type="text/css">
-        .edit.layui-input-block{
+        .edit.layui-input-block {
             margin-left: 10px;
         }
+
         .inline-long1 {
             width: 620px;
         }
+
         .inline-long2 {
             width: 105px;
             margin: 0
         }
+
         .mar-top {
             margin-top: 15px;
         }
@@ -39,7 +43,8 @@
                     <form class="layui-form" action="">
                         <div class="layui-form-item">
                             <div class="edit layui-input-block layui-inline inline-long1">
-                                <input type="text" id="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                <input type="text" id="title" required lay-verify="required" placeholder="请输入标题"
+                                       autocomplete="off" class="layui-input">
                             </div>
                             <div class="edit layui-input-block layui-inline inline-long2">
                                 <select name="type" lay-verify="required" id="type">
@@ -52,7 +57,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div id = "edit"></div>
+                        <div id="edit"></div>
                         <div class="layui-form-item">
                             <div class="edit layui-input-block mar-top">
                                 <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn1">立即提交</button>
@@ -63,42 +68,47 @@
             </div>
         </div>
         <div th:replace="common/right::copy">
+        </div>
     </div>
 </div>
 </body>
 <script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/js/wangEditor.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<script>
-    layui.use('element', function(){
+<script th:src="@{/js/connect.js}"></script>
+<script th:inline="javascript">
+    var userId = [[${user.userId}]]
+    window.onload = connect(userId);
+    layui.use('element', function () {
         var element = layui.element;
 
         //监听导航点击
-        element.on('nav(demo)', function(elem){
+        element.on('nav(demo)', function (elem) {
             layer.msg(elem.text());
         });
     });
     layui.use('form', function () {
         var form = layui.form;
         var layer = layui.layer;
-        form.on('submit(formDemo)', function(data){
+        form.on('submit(formDemo)', function (data) {
             var invitation = {
                 title: $("#title").val(),
                 type: $("#type").val(),
                 content: editor.txt.html()
             }
             $.ajax({
-                url:"/articles/submit",
-                type:"POST",
+                url: "/articles/submit",
+                type: "POST",
                 contentType: "application/x-www-form-urlencoded",
-                data:invitation,
+                data: invitation,
                 success: function (result) {
                     console.log(result);
                     if (result.code == 0) {
                         layer.msg('文章发布成功！', {
                             icon: 1,
                             time: 2000
-                        }, function(){
+                        }, function () {
                             window.location.href = "/articles/info?id=" + result.data;
                         });
                     } else {
@@ -148,11 +158,16 @@
             console.log(url) // url 即插入图片的地址
         }
         editor.customConfig.uploadImgHooks = {
-            before: function (xhr, editor, files) {},
-            success: function (xhr, editor, result) {},
-            fail: function (xhr, editor, result) {},
-            error: function (xhr, editor) {},
-            timeout: function (xhr, editor) {},
+            before: function (xhr, editor, files) {
+            },
+            success: function (xhr, editor, result) {
+            },
+            fail: function (xhr, editor, result) {
+            },
+            error: function (xhr, editor) {
+            },
+            timeout: function (xhr, editor) {
+            },
             customInsert: function (insertImg, result, editor) {
                 var url = result.data;
                 insertImg(url)
