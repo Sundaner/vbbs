@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Layui</title>
+    <title>豆瓣搜索</title>
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -54,14 +54,14 @@
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/toastr.min.js}"></script>
-<script th:src="@{/js/demo2.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:src="@{/js/connect.js}"></script>
 <script th:inline="javascript">
+    var userId = [[${user.userId}]];
     window.key = [[${value}]];
     window.start = [[${start}]];
-    var userId = [[${user.userId}]]
     window.onload = connect(userId);
+    console.log(window.key);
     layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
@@ -72,6 +72,7 @@
         });
     });
 </script>
+<script th:src="@{/js/demo2.js}"></script>
 
 </body>
 </html>

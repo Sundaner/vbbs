@@ -17,4 +17,6 @@ public interface UserMapper {
     int updateImg(User user);
 
     int updateInfo(User user);
+
+    int updatePwd(User user);
 }

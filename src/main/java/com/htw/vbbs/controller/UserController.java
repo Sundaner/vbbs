@@ -2,6 +2,7 @@ package com.htw.vbbs.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.htw.vbbs.exception.GlobalException;
 import com.htw.vbbs.result.CodeMsg;
 import com.htw.vbbs.result.Result;
 import com.htw.vbbs.domain.Invitation;
@@ -11,6 +12,7 @@ import com.htw.vbbs.service.InterestService;
 import com.htw.vbbs.service.InvitationService;
 import com.htw.vbbs.service.StoreService;
 import com.htw.vbbs.service.UserService;
+import com.htw.vbbs.util.MD5Util;
 import com.htw.vbbs.util.TencentUtil;
 import com.htw.vbbs.util.UUIDUtil;
 import com.htw.vbbs.vo.InvitationVo;
@@ -187,5 +189,29 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("touser", toUser);
         return "chat";
+    }
+
+    @RequestMapping("/toUpdatePwd")
+    public String toUpdatePwd (Model model, User user) {
+
+        List<User> inter = interestService.getMyInterest(user.getUserId());
+        model.addAttribute("inter", inter);
+        model.addAttribute("user", user);
+        return "updatePwd";
+    }
+
+    @PostMapping("/updatePwd")
+    @ResponseBody
+    public Result<Boolean> updatePwd(HttpServletRequest request,HttpServletResponse response,
+                                     User user, @RequestParam String pwd1, @RequestParam String pwd2){
+        String dbPass = user.getPassword();
+        String slat = user.getSalt();
+        String calcPass = MD5Util.formPassToDBPass(pwd1, slat);
+        if(!calcPass.equals(dbPass)){
+            throw new GlobalException(CodeMsg.PASSWORD_ERROR);
+        }
+        String pwd = MD5Util.formPassToDBPass(pwd2, slat);
+        int re = userService.updatePwd(request, response, user.getUserId(), pwd);
+        return Result.success(true);
     }
 }

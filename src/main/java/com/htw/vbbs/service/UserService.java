@@ -83,6 +83,8 @@ public class UserService {
         String nickname = registerVo.getNickname();
         String phone = registerVo.getPhone();
         String formPass = registerVo.getPassword();
+        String def_sign = "这个人很懒，什么也没留下！";
+        String def_PatUrl = "https://vbbs1-1301952348.cos.ap-beijing.myqcloud.com/upload/img/ecb1e961e23e4410819571717da848f5.png";
         User user = getByPhone(Long.parseLong(phone));
         if (user != null) {
             throw new GlobalException(CodeMsg.HAVE_ACCOUNT);
@@ -98,7 +100,12 @@ public class UserService {
         new_user.setSalt(salt);
         new_user.setCreateTime(timeStamp);
         new_user.setUpdateTime(timeStamp);
+        new_user.setSign(def_sign);
+        new_user.setPortrait(def_PatUrl);
         userMapper.insert(new_user);
+
+        String token = UUIDUtil.uuid();
+        addCookie(response, token, new_user);
         return true;
     }
 
@@ -148,6 +155,23 @@ public class UserService {
         Timestamp timeStamp = new Timestamp(updateTime.getTime());
         user.setUpdateTime(timeStamp);
         int re = userMapper.updateInfo(user);
+        if(re == 1){
+            User new_user = userMapper.getById(userId);
+            String token = userArgResolver.getCookieValue(request, COOKI_NAME_TOKEN);
+            addCookie(response, token, new_user);
+        }
+        return re;
+    }
+
+    public int updatePwd(HttpServletRequest request, HttpServletResponse response, int userId, String pwd2) {
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setPassword(pwd2);
+        Date updateTime = new Date();
+        Timestamp timeStamp = new Timestamp(updateTime.getTime());
+        user.setUpdateTime(timeStamp);
+        int re = userMapper.updatePwd(user);
         if(re == 1){
             User new_user = userMapper.getById(userId);
             String token = userArgResolver.getCookieValue(request, COOKI_NAME_TOKEN);

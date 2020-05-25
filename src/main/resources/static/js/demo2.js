@@ -72,7 +72,7 @@ function createDom(mydata){
 
 	})
 }
-if (value) {
+if (scodevalue) {
 	search(scodevalue,spage);
 };
 $('.btn').on('click',function(){
@@ -85,7 +85,7 @@ $('.content-boxers').on('click','li',function(){
 })
  function page(json) {
             if (!json.id) return false;
-            var $Div = document.getElementById(json.id);            
+            var $Div = document.getElementById(json.id);
             var nowNum = json.nowNum;
             var allNum = json.allNum;
            

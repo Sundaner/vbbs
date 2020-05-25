@@ -43,13 +43,21 @@
     <insert id="insert" parameterType="com.htw.vbbs.domain.User" >
       INSERT INTO user(phone, nickname, password, salt,
         createTime, updateTime)
-      VALUES (#{phoe}, #{nickname}, #{password}, #{salt},
+      VALUES (#{phone}, #{nickname}, #{password}, #{salt},
         #{createTime}, #{updateTime});
     </insert>
 
     <update id="updateImg"  parameterType="com.htw.vbbs.domain.User">
         update user
         set portrait = #{portrait},
+            updateTime = #{updateTime}
+        where userId = #{userId}
+    </update>
+
+
+    <update id="updatePwd"  parameterType="com.htw.vbbs.domain.User">
+        update user
+        set password = #{password},
             updateTime = #{updateTime}
         where userId = #{userId}
     </update>

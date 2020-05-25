@@ -86,6 +86,21 @@ public class RedisService {
     }
 
     /**
+     * 删除
+     */
+    public  Long del(KeyPrefix prefix, String key){
+        Jedis jedis = null;
+        Long result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.del(prefix.getPrefix()+key);
+            return result;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
      * 判断key是否存在
      * */
     public <T> boolean exists(KeyPrefix prefix, String key) {
