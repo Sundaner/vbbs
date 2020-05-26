@@ -40,7 +40,7 @@
         where phone = #{phone}
     </select>
 
-    <insert id="insert" parameterType="com.htw.vbbs.domain.User" >
+    <insert id="insert" parameterType="com.htw.vbbs.domain.User"  useGeneratedKeys="true" keyProperty="userId" keyColumn="userId">
       INSERT INTO user(phone, nickname, password, salt,
         createTime, updateTime)
       VALUES (#{phone}, #{nickname}, #{password}, #{salt},

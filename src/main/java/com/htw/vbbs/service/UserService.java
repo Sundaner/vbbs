@@ -104,6 +104,7 @@ public class UserService {
         new_user.setPortrait(def_PatUrl);
         userMapper.insert(new_user);
 
+        new_user.setUserId(new_user.getUserId());
         String token = UUIDUtil.uuid();
         addCookie(response, token, new_user);
         return true;

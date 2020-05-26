@@ -63,9 +63,12 @@
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">生日</label>
-                            <div class="layui-inline">
+                            <div class="layui-inline" th:if="${user.birthday} ne null">
                                 <input type="text" class="layui-input" name="birth" id="test1"
                                        th:value="${#dates.format(user.birthday,'yyyy-MM-dd')}">
+                            </div>
+                            <div class="layui-inline" th:if="${user.birthday} eq null">
+                                <input type="text" class="layui-input" name="birth" id="test1">
                             </div>
                         </div>
                         <div class="layui-form-item">
