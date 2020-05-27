@@ -7,6 +7,8 @@
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_997556_w8c5a94mrz.css" />
+    <link rel="stylesheet" th:href="@{/css/wangEditor1.css}">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
@@ -74,7 +76,7 @@
 </body>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/toastr.min.js}"></script>
-<script th:src="@{/js/wangEditor.js}"></script>
+<script th:src="@{/js/wangEditor1.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:src="@{/js/connect.js}"></script>
 <script th:inline="javascript">
@@ -124,56 +126,38 @@
         form.render();
     });
 
-    var editor;
-    $(document).ready(function () {
-        var E = window.wangEditor
-        editor = new E('#edit') // 隐藏“网络图片
-        editor.customConfig.showLinkImg = false
-        editor.customConfig.menus = [ //菜单
-            'head',  // 标题
-            'bold',  // 粗体
-            'fontSize',  // 字号
-            'fontName',  // 字体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'strikeThrough',  // 删除线
-            'foreColor',  // 文字颜色
-            'backColor',  // 背景颜色
-            'link',  // 插入链接
-            'list',  // 列表
-            'justify',  // 对齐方式
-            'quote',  // 引用
-            'emoticon',  // 表情
-            'image',  // 插入图片
-            'table',  // 表格
-            'video',  // 插入视频
-            'code',  // 插入代码
-            'undo',  // 撤销
-            'redo'  // 重复
-        ]
-        editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
-        editor.customConfig.uploadImgServer = '/user/uploadImg';
-        editor.customConfig.uploadFileName = 'file'; //与后台获取文件名相同
-        editor.customConfig.linkImgCallback = function (url) {
-            console.log(url) // url 即插入图片的地址
+    var E = window.wangEditor
+    var editor = new E('#edit')
+    var server = '/user/uploadImg';
+    function customInsert(insertImg, result, editor) {
+        var url = result.data;
+        insertImg(url);
+    }
+
+    let customConfig = {
+        showLinkImg:false,
+        uploadImgServer:server,
+        uploadFileName:'file',
+        zIndex:1, //编辑器层级，层级过高会导致悬浮与页面之上
+        uploadImgShowBase64:true,
+        uploadVedioServer:server,
+        uploadAudioServer:server,
+        uploadImgMaxSize:3 * 1024 * 1024,
+        uploadImgMaxLength:5,
+        pasteText:false,
+        pasteFilterStyle:false,
+        pasteIgnoreImg:false, //粘贴别的文档的时候，是否忽略图片，false不忽略
+        uploadImgHooks:{
+            customInsert
+        },
+        uploadVedioHooks:{
+            customInsert
+        },
+        uploadAudioHooks:{
+            customInsert
         }
-        editor.customConfig.uploadImgHooks = {
-            before: function (xhr, editor, files) {
-            },
-            success: function (xhr, editor, result) {
-            },
-            fail: function (xhr, editor, result) {
-            },
-            error: function (xhr, editor) {
-            },
-            timeout: function (xhr, editor) {
-            },
-            customInsert: function (insertImg, result, editor) {
-                var url = result.data;
-                insertImg(url)
-            }
-        }
-        editor.create()
-    })
+    };
+    editor.customConfig = customConfig;
+    editor.create()
 </script>
 </html>
