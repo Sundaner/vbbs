@@ -75,7 +75,7 @@ public class MovieController {
             movies.add(null);
         }
         List<User> inter = interestService.getMyInterest(user.getUserId());
-
+        model.addAttribute("user", user);
         model.addAttribute("inter", inter);
         model.addAttribute("movies", movies);
         model.addAttribute("length", movies.size());
