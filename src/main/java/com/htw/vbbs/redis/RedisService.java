@@ -37,7 +37,7 @@ public class RedisService {
     /**
      * 设置对象
      * */
-    public <T> boolean set(KeyPrefix prefix, String key, T value,int exTime){
+    public <T> boolean set(KeyPrefix prefix, String key, T value, int exTime){
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();

@@ -6,6 +6,8 @@ import com.htw.vbbs.music.model.MusicDetail;
 import com.htw.vbbs.music.model.Rank;
 import com.htw.vbbs.music.response.DetailResp;
 import com.htw.vbbs.music.response.RankResp;
+import com.htw.vbbs.redis.MusicKey;
+import com.htw.vbbs.redis.RedisService;
 import com.htw.vbbs.util.OkHttpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class MusicService {
 
     @Autowired
     private OkHttpUtil okHttpUtil;
+    @Autowired
+    private RedisService redisService;
 
     public static String getaway = "https://api.apiopen.top";
 
@@ -28,8 +32,9 @@ public class MusicService {
         String url = getaway + MusicApi.TANK.getApi();
         String json = OkHttpUtil.get(url, query);
         RankResp resp = JSON.parseObject(json, RankResp.class);
-        if(resp.getCode() != 200){
-            return null;
+        if(resp.getCode() != 200 || resp.getResult() == null){
+            json = redisService.get(MusicKey.rank, "", String.class);
+            resp = JSON.parseObject(json, RankResp.class);
         }
         return resp.getResult();
     }
@@ -39,10 +44,11 @@ public class MusicService {
         Map<String, String> query = new HashMap<>();
         query.put("type", type);
         String url = getaway + MusicApi.RANKDETAIL.getApi();
-        String josn = OkHttpUtil.get(url, query);
-        DetailResp resp = JSON.parseObject(josn, DetailResp.class);
-        if(resp.getCode() != 200){
-            return null;
+        String json = OkHttpUtil.get(url, query);
+        DetailResp resp = JSON.parseObject(json, DetailResp.class);
+        if(resp.getCode() != 200 || resp.getResult() == null){
+            json = redisService.get(MusicKey.rankDetails, type, String.class);
+            resp = JSON.parseObject(json, DetailResp.class);
         }
         for(MusicDetail  detail : resp.getResult()){
             if(id == detail.getSong_id()){
