@@ -3,7 +3,7 @@
 <mapper namespace="com.htw.vbbs.dao.MusicDiscussMapper">
     <resultMap id="ResultMap" type="com.htw.vbbs.domain.MusicDiscuss">
         <id column="musicDisId" property="musicDisId" jdbcType="INTEGER"/>
-        <result column="musicId" property="musicId" jdbcType="INTEGER"/>
+        <result column="musicId" property="musicId" jdbcType="VARCHAR"/>
         <result column="userId" property="userId" jdbcType="INTEGER"/>
         <result column="replyId" property="replyId" jdbcType="INTEGER"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
@@ -22,7 +22,7 @@
         order by createTime desc
     </select>
 
-    <select id="getMusicDisList" resultMap="ResultMap" parameterType="java.lang.Integer" >
+    <select id="getMusicDisList" resultMap="ResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />
         from musicdiscuss

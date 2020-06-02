@@ -45,7 +45,7 @@ public class MusicController {
     }
 
     @RequestMapping("/detail")
-    public String getMusicDetail (Model model, User user, @RequestParam int id, @RequestParam String type,
+    public String getMusicDetail (Model model, User user, @RequestParam String id, @RequestParam String type,
                                   @RequestParam(defaultValue = "1",value = "pageNum")int pageNum) {
         MusicDetail detail = musicService.getMusicDetail(type, id);
 
@@ -91,10 +91,35 @@ public class MusicController {
         return "music/searchResult";
     }
 
+    @RequestMapping("/searchDetail")
+    public String searchMusicDetail (Model model, User user, @RequestParam String id,
+                                     @RequestParam(defaultValue = "1",value = "pageNum")int pageNum) {
+
+        PageHelper.startPage(pageNum, 20);
+        List<MusicDiscuss> musicDiscusses = musicDiscussService.getMusicDiscussList("d"+id);
+        PageInfo<MusicDiscuss> page = new PageInfo<>(musicDiscusses);
+
+        List<MusicDisVo> mvo = musicDiscussService.toDisVo(page.getList());
+        PageInfo<MusicDisVo> pageInfo = new PageInfo<>(mvo);
+        pageInfo.setPageNum(page.getPageNum());
+        pageInfo.setTotal(page.getTotal());
+        List<User> inter = interestService.getMyInterest(user.getUserId());
+
+        model.addAttribute("inter", inter);
+        model.addAttribute("user", user);
+        model.addAttribute("id",id);
+        model.addAttribute("pageInfo", pageInfo);
+        return "music/searchMusicDetail";
+    }
+
     @RequestMapping("/submit")
     @ResponseBody
     public Result<MusicDisVo> doSubmit(ToMusDisVo tomusDisVo, User user){
-        int musicId = tomusDisVo.getMusicId();
+        int type = tomusDisVo.getType();
+        String musicId = tomusDisVo.getMusicId();
+        if(type == 1){
+            musicId = "d" + musicId;
+        }
         int disId = tomusDisVo.getDisId();
         String content = tomusDisVo.getContent();
         int userId = user.getUserId();

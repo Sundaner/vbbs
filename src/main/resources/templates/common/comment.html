@@ -29,14 +29,14 @@
                     <div class="li-item-center">
                         <h5 class="li-title">
                             <a th:text="${a.userName}"></a>
-                            <span class="art-meta-item" th:text="${a.createTime}"></span>
+                            <span class="art-meta-item" th:text="${#dates.format(a.createTime,'yyyy-MM-dd HH:mm:ss')}"></span>
                         </h5>
                         <div class="art-reply" th:if="${a.parent} ne null">
                             <blockquote class="layui-elem-quote layui-quote-nm art-yin">
                                 <div>
                                     <img th:src="${a.parent.userImg}" class="art-yin-img">
                                     <span th:text="${a.parent.userName}"></span>
-                                    <span class="art-meta-item" th:text="${a.parent.createTime}"></span>
+                                    <span class="art-meta-item" th:text="${#dates.format(a.parent.createTime,'yyyy-MM-dd HH:mm:ss')}"></span>
                                 </div>
                                 <div>
                                     <p th:text="${a.parent.content}"></p>

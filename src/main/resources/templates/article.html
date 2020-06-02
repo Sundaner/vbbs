@@ -78,9 +78,9 @@
                     </div>
                     <div>
                         <span class="art-t-span">发布于</span>
-                        <span class="art-t-span" th:text="${article.createTime}"></span>
+                        <span class="art-t-span" th:text="${#dates.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></span>
                         <span class="art-t-span">&nbsp/&nbsp 更新于</span>
-                        <span class="art-t-span" th:text="${article.updateTime}"></span>
+                        <span class="art-t-span" th:text="${#dates.format(article.updateTime,'yyyy-MM-dd HH:mm:ss')}"></span>
                     </div>
                 </div>
                 <div class="layui-card-body">

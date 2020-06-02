@@ -80,7 +80,7 @@
                                     </h5>
                                     <div class="li-meta">
                                         <span class="meta-item" th:text="${p.userName}"></span>
-                                        <span class="meta-item" th:text="${p.updateTime}"></span>
+                                        <span class="meta-item" th:text="${#dates.format(p.updateTime,'yyyy-MM-dd HH:mm:ss')}"></span>
                                         <span class="meta-item-type" th:text="${p.type}"></span>
                                     </div>
                                 </div>

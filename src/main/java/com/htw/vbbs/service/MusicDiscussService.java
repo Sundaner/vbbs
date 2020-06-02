@@ -20,7 +20,7 @@ public class MusicDiscussService {
     @Autowired
     private UserService userService;
 
-    public List<MusicDiscuss> getMusicDiscussList(int id) {
+    public List<MusicDiscuss> getMusicDiscussList(String id) {
         return musicDiscussMapper.getMusicDisList(id);
     }
 
@@ -52,7 +52,7 @@ public class MusicDiscussService {
         return musicDisVos;
     }
 
-    public MusicDisVo insert(int musicId, int disId, int userId, String content) {
+    public MusicDisVo insert(String musicId, int disId, int userId, String content) {
         User user = userService.getSimpInfoById(userId);
         MusicDiscuss comment = new MusicDiscuss();
         comment.setMusicId(musicId);

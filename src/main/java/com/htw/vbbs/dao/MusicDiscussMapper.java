@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface MusicDiscussMapper {
-    List<MusicDiscuss> getMusicDisList(int id);
+    List<MusicDiscuss> getMusicDisList(String id);
 
     MusicDiscuss getById(int replyId);
 

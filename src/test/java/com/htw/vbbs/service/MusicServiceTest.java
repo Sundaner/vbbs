@@ -52,7 +52,7 @@ public class MusicServiceTest {
     @Test
     public void testDetail(){
         String type = "2";
-        long id = 672865438;
+        String id = "672865438";
         MusicDetail detail = musicService.getMusicDetail(type, id);
         System.out.println(detail);
     }

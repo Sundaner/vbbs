@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MusicDetail {
     private String pic_radio;
-    private long song_id;
+    private String song_id;
     private String title;
     private String author;
     private String album_title;

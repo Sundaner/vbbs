@@ -6,7 +6,8 @@ import java.io.Serializable;
 
 @Data
 public class ToMusDisVo implements Serializable {
-    private int musicId;
+    private String musicId;
     private int disId;
     private String content;
+    private int type;
 }

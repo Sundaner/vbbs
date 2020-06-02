@@ -78,7 +78,7 @@
                                         <a th:text="${p.title}" th:href="'/articles/info?id='+ ${p.invitationId}"></a>
                                     </h1>
                                     <div class="li-meta">
-                                        <span class="meta-item" th:text="${p.updateTime}"></span>
+                                        <span class="meta-item" th:text="${#dates.format(p.updateTime,'yyyy-MM-dd HH:mm:ss')}"></span>
                                         <span class="meta-item-type" th:text="${p.trueType}"></span>
                                     </div>
                                 </div>

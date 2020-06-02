@@ -87,10 +87,9 @@
                                 </div>
                                 <div class="li-item-center">
                                     <span class="meta-item" th:text="${p.userName}"></span>
-
-                                    <span class="meta-item red-point" th:text="${p.createTime}"
+                                    <span class="meta-item red-point" th:text="${#dates.format(p.createTime,'yyyy-MM-dd HH:mm:ss')}"
                                           th:if="${p.status} eq '0'"></span>
-                                    <span class="meta-item" th:text="${p.createTime}" th:if="${p.status} eq '1'"></span>
+                                    <span class="meta-item" th:text="${#dates.format(p.createTime,'yyyy-MM-dd HH:mm:ss')}" th:if="${p.status} eq '1'"></span>
                                     <span class="none" th:text="${p.messageId}"></span>
                                     <span class="op-right">
                                         <a class="right-option" href="#" onclick="read(this)">标记已读</a>

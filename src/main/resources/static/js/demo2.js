@@ -81,7 +81,7 @@ $('.btn').on('click',function(){
 })
 $('.content-boxers').on('click','li',function(){
     console.log($(this).attr('class'));
-    window.location.href='/music/search'+'?id='+$(this).attr('class');
+    window.location.href='/music/searchDetail'+'?id='+$(this).attr('class');
 })
  function page(json) {
             if (!json.id) return false;

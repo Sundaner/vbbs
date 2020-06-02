@@ -40,7 +40,7 @@ public class MusicService {
     }
 
 
-    public MusicDetail getMusicDetail(String type, long id){
+    public MusicDetail getMusicDetail(String type, String id){
         Map<String, String> query = new HashMap<>();
         query.put("type", type);
         String url = getaway + MusicApi.RANKDETAIL.getApi();
@@ -51,7 +51,7 @@ public class MusicService {
             resp = JSON.parseObject(json, DetailResp.class);
         }
         for(MusicDetail  detail : resp.getResult()){
-            if(id == detail.getSong_id()){
+            if(id.equals(detail.getSong_id())){
                 String lyric = "暂无歌词";
                 if(StringUtils.isNotEmpty(detail.getLrclink())){
                     lyric = okHttpUtil.getLrcTXT(detail.getLrclink());

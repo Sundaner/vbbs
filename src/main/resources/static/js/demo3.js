@@ -61,10 +61,6 @@ function createDom(mydata){
 		<div class="scorebox">\
 			<p>豆瓣评分</p>\
 			<p class="score">'+ele+'<span></span></p>\
-		</div>\
-		<div class="footer">\
-			<li><span></span>写短评</li>\
-			<li><span></span>写乐评</li>\
 		</div>';
    $('.content').html(str);
     ele=-15*(10-parseInt(ele));

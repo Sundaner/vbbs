@@ -3,54 +3,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>音乐详情</title>
+    <title>豆瓣搜索</title>
     <meta name="referrer" content="never">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/home.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/index3.css}">
     <link rel="stylesheet" th:href="@{/css/right.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/comment.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/toastr.min.css}" media="all">
-    <style type="text/css">
-        .m-title {
-            width: 70%;
-            margin: 0 auto;
-            padding-bottom: 20px;
-        }
-
-        .movie-soon {
-            display: flex;
-            flex: 1;
-            margin: 0 auto;
-            position: relative;
-            width: 70%;
-            border-bottom: 1px solid #f2f2f2;
-        }
-
-        .movie-soon-left {
-            display: flex;
-        }
-
-        .intro {
-            margin-left: 15px;
-        }
-
-        .musicinfo-img-size {
-            width: 200px;
-            height: 200px;
-        }
-
-        .li-padd {
-            padding: 3px 0 4px 8px;
-        }
-
-        .music-brief {
-            width: 70%;
-            margin: 0 auto;
-            white-space: pre-line;
-        }
-    </style>
 </head>
 <body>
 <ul th:replace="common/header::copy"></ul>
@@ -59,47 +21,25 @@
         <div class="left-container">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    <span>电影 / 音乐详情</span>
+                    <span>电影 / 音乐搜索</span>
                 </div>
                 <div class="layui-card-body">
-                    <div class="m-title">
-                        <h1>
-                            <span th:text="${music.title}"></span>
-                        </h1>
-                    </div>
-                    <div class="movie-soon">
-                        <div class="movie-soon-left">
-                            <a href="">
-                                <img th:src="${music.pic_radio}" class="musicinfo-img-size">
-                            </a>
-                            <div class="intro">
-                                <ul>
-                                    <li class="li-item li-padd">
-                                        <span>歌手：</span>
-                                        <span th:text="${music.author}"></span>
-                                    </li>
-                                    <li class="li-item li-padd">
-                                        <span>专辑：</span>
-                                        <span th:text="${music.album_title}"></span>
-                                    </li>
-                                    <li class="li-item li-padd">
-                                        <span>发行时间：</span>
-                                        <span th:text="${music.publishtime}"></span>
-                                    </li>
-                                    <li class="li-item li-padd">
-                                        <span>发行公司：</span>
-                                        <span th:text="${music.si_proxycompany }"></span>
-                                    </li>
-                                </ul>
+                    <div class="search">
+                        <div class="search-main">
+                            <div class="logo-left">
+                                <img th:src="@{/img/lg_music_a12_2.png}" height="27" width="115" alt="">
+                            </div>
+                            <div class="logo-input">
+                                <form action="">
+                                    <input type="text" class="inp">
+                                    <div class="sbtn">
+                                        <input type="bottm" class="btn">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class="music-brief">
-                        <h2>
-                            歌词
-                        </h2>
-                        <p th:text="${music.lyric}">
-                        </p>
+                    <div class="content">
                     </div>
                 </div>
             </div>
@@ -112,10 +52,11 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<script th:src="@{/js/comment.js}"></script>
 <script th:src="@{/js/connect.js}"></script>
+<script th:src="@{/js/comment.js}"></script>
 <script th:inline="javascript">
-    var userId = [[${user.userId}]]
+    window.songId = [[${id}]];
+    var userId = [[${user.userId}]];
     window.onload = connect(userId);
     var commentId = 0;
     layui.use('element', function () {
@@ -130,7 +71,7 @@
     layui.use('laypage', function () {
         var laypage = layui.laypage;
         var id = [[${id}]];
-        var type = [[${type}]]
+        console.log(1)
         laypage.render({
             elem: 'paginator',
             limit: 20,
@@ -138,7 +79,7 @@
             curr: [[${pageInfo.pageNum}]],
             jump: function (obj, first) {
                 if (!first) {
-                    window.location.href = "/music/detail?type=" + type + "&id=" + id + "&pageNum=" + obj.curr
+                    window.location.href = "/music/searchMusicDetail?id=" + id + "&pageNum=" + obj.curr
                 }
             }
         });
@@ -147,9 +88,10 @@
     layui.use('form', function () {
         var form = layui.form;
         var musicId = [[${id}]];
+        console.log(2)
         form.on('submit(formDemo)', function (data) {
             var content = data['field']['comt'];
-            var type = 0;
+            var type = 1;
             var fdata = {
                 content: content,
                 disId: commentId,
@@ -176,5 +118,7 @@
         });
     });
 </script>
+<script th:src="@{/js/demo3.js}"></script>
+
 </body>
 </html>

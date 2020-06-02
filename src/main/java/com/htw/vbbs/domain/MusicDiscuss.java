@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 @Data
 public class MusicDiscuss {
     private int musicDisId;
-    private int musicId;
+    private String musicId;
     private int userId;
     private String content;
     private int replyId;
