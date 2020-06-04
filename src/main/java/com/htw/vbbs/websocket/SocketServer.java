@@ -7,6 +7,7 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,7 +20,7 @@ public class SocketServer {
 
     /**
      *
-     * 用线程安全的CopyOnWriteArraySet来存放客户端连接的信息
+     * 用线程安全的ConcurrentHashMap来存放客户端连接的信息
      */
     private static Map<Integer, Session> socketServers = new ConcurrentHashMap<>();
 
@@ -111,9 +112,11 @@ public class SocketServer {
      * @param message
      * @param users
      */
-    public synchronized static void SendMany(String message,int [] users) {
+    public synchronized static void SendMany(String message, List<Integer> users) {
         for (int userId : users) {
-            sendMessage(message,userId);
+            if(hasOnline(userId)){
+                sendMessage(message,userId);
+            }
         }
     }
 

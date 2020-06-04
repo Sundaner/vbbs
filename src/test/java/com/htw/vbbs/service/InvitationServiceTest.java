@@ -1,10 +1,8 @@
 package com.htw.vbbs.service;
 
-
 import com.htw.vbbs.dao.InvitationMapper;
 import com.htw.vbbs.domain.Invitation;
 import lombok.extern.slf4j.Slf4j;
-import org.bouncycastle.asn1.cms.PasswordRecipientInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +61,7 @@ public class InvitationServiceTest {
     public void testZan(){
         int userId = 101;
         int invitaionId = 219;
-        service.zan(userId, invitaionId);
+//        service.zan(userId, invitaionId);
     }
 
     @Test

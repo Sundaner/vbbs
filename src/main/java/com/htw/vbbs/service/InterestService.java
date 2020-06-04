@@ -51,4 +51,14 @@ public class InterestService {
         }
         return 0;
     }
+
+    public List<Integer> getInterestList(int master){
+        List<Interest> ins = interestMapper.getInterestList(master);
+        List<Integer> list = new ArrayList<>();
+        ins.forEach(item ->{
+            int userId = item.getUserId();
+            list.add(userId);
+        });
+        return list;
+    }
 }

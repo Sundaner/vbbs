@@ -15,4 +15,6 @@ public interface InterestMapper {
     int cancelInterest(Interest interest);
 
     Interest hasInterest(Interest interest);
+
+    List<Interest> getInterestList(int master);
 }

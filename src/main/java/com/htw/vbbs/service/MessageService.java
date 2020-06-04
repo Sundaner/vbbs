@@ -30,7 +30,7 @@ public class MessageService {
         message.setCreateTime(timeStamp);
         message.setStatus(0);
         if(SocketServer.hasOnline(id)){
-            String notify = "用户" + name + "给你发送一一条私信，看去看看吧！";
+            String notify = "用户" + name + "给你发送了一条私信，看去看看吧！";
             SocketServer.sendMessage(notify, id);
         }
         return messageMapper.sendMessage(message);

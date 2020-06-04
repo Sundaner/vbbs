@@ -4,6 +4,7 @@ import com.htw.vbbs.dao.InvitationMapper;
 import com.htw.vbbs.domain.*;
 import com.htw.vbbs.vo.InvitationVo;
 import com.htw.vbbs.vo.ToInvitationVo;
+import com.htw.vbbs.websocket.SocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +26,15 @@ public class InvitationService {
     private ZanService zanService;
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private InterestService interestService;
 
 
     public int insertInvitation(Invitation invitation){
         return invitationMapper.insert(invitation);
     }
 
-    public int insertVo(ToInvitationVo vo, int userId){
+    public int insertVo(ToInvitationVo vo, int userId, String name){
         Invitation invitation = new Invitation();
         invitation.setUserId(userId);
         invitation.setTitle(vo.getTitle());
@@ -44,7 +47,13 @@ public class InvitationService {
         invitation.setCreateTime(timeStamp);
         invitation.setUpdateTime(timeStamp);
         insertInvitation(invitation);
-        return invitation.getInvitationId();
+        int id = invitation.getInvitationId();
+        if(id != 0){
+            String notify = "你关注的用户" + name + "发了一篇新文章，快去看看吧！";
+            List<Integer> list = interestService.getInterestList(userId);
+            SocketServer.SendMany(notify, list);
+        }
+        return id;
     }
 
     public Invitation getById(int id) {
@@ -123,9 +132,14 @@ public class InvitationService {
     }
 
     @Transactional
-    public boolean zan(int userId, int invitationId) {
+    public boolean zan(int userId, int invitationId, int author, String name) {
         zanService.zan(userId, invitationId);
         invitationMapper.zan(invitationId);
+        Invitation invitation = invitationMapper.getById(invitationId);
+        if(SocketServer.hasOnline(author)){
+            String notify = "用户"+name+"给你的文章:"+ invitation.getTitle()+"点了个赞，块去看看吧！";
+            SocketServer.sendMessage(notify, author);
+        }
         return true;
     }
 

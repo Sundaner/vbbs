@@ -11,7 +11,7 @@
         interestId, userId, master
     </sql>
 
-    <select id="getMyInterest" resultMap="ResultMap" parameterType="java.lang.Integer" >
+    <select id="getMyInterest" resultMap="ResultMap" parameterType="java.lang.Integer">
         select master from interest
         where userId = #{userId}
     </select>
@@ -32,4 +32,8 @@
         where userId = #{userId} and master = #{master}
     </select>
 
+    <select id="getInterestList" resultMap="ResultMap" parameterType="java.lang.Integer">
+        select userId from interest
+        where master = #{master}
+    </select>
 </mapper>

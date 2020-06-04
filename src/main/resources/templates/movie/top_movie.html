@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <div id="paginator"></div>
                 </div>
             </div>
         </div>
@@ -112,6 +112,20 @@
         element.on('nav(demo)', function (elem) {
             //console.log(elem)
             layer.msg(elem.text());
+        });
+    });
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'paginator',
+            limit:20,
+            count: 250,
+            curr: [[${pageNum}]],
+            jump: function (obj, first) {
+                if (!first) {
+                    window.location.href = "/movie/top?pageNum=" + obj.curr
+                }
+            }
         });
     });
 </script>

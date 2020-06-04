@@ -46,7 +46,7 @@ public class InvitationController {
     @RequestMapping("/submit")
     @ResponseBody
     public Result<Integer> doSubmit(ToInvitationVo invitation, User user){
-        int vid = invitationService.insertVo(invitation, user.getUserId());
+        int vid = invitationService.insertVo(invitation, user.getUserId(), user.getNickname());
         return Result.success(vid);
     }
 
@@ -109,9 +109,9 @@ public class InvitationController {
 
     @RequestMapping("/zan")
     @ResponseBody
-    public Result<Boolean> doZan(int id, int flag, User user){
+    public Result<Boolean> doZan(int id, int flag, User user, int author){
         if(flag == 0){
-            invitationService.zan(user.getUserId(), id);
+            invitationService.zan(user.getUserId(), id, author, user.getNickname());
         }else {
             invitationService.cancelZan(user.getUserId(), id);
         }

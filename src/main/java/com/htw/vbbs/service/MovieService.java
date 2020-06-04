@@ -61,9 +61,14 @@ public class MovieService {
         return onesub;
     }
 
-    public List<ComingMovieVo> getTopMovie(){
+    public List<ComingMovieVo> getTopMovie(int pageNum){
         String url = DOUBAN_URL + "/v2/movie/top250";
         HashMap<String, String> param = Maps.newHashMap();
+        if(pageNum != 1){
+            int start = (pageNum - 1) * 20;
+            param.put("start", String.valueOf(start));
+            param.put("count", String.valueOf(20));
+        }
         String result = HttpUtil.httpRequst(url, param, ENCODE, GET);
         DoubanMovie movies = JSON.parseObject(result, DoubanMovie.class);
         List<ComingMovieVo> comingMovieVos = new ArrayList<>();

@@ -172,12 +172,12 @@
         var id = [[${article.invitationId}]];
         var flag = $(elem).prev('span').text();
         var val = $(elem).next('span').text();
-
+        var author = [[${article.userId}]];
         $.ajax({
             url: "/articles/zan",
             type: "POST",
             dataType: "json",
-            data: "id=" + id + "&flag=" + flag,
+            data: "id=" + id + "&flag=" + flag + "&author=" + author,
             success: function (result) {
                 if (result.code == 0) {
                     if (flag == 0) {

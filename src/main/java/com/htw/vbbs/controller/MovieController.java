@@ -1,6 +1,5 @@
 package com.htw.vbbs.controller;
 
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.htw.vbbs.result.Result;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.List;
 
 @Controller
@@ -69,8 +67,9 @@ public class MovieController {
     }
 
     @RequestMapping("/top")
-    public String getTopMovie (Model model, User user) {
-        List<ComingMovieVo> movies = movieService.getTopMovie();
+    public String getTopMovie (Model model, User user,
+                               @RequestParam(defaultValue = "1",value = "pageNum")int pageNum) {
+        List<ComingMovieVo> movies = movieService.getTopMovie(pageNum);
         if(movies.size()%2 == 1){
             movies.add(null);
         }
@@ -79,6 +78,7 @@ public class MovieController {
         model.addAttribute("inter", inter);
         model.addAttribute("movies", movies);
         model.addAttribute("length", movies.size());
+        model.addAttribute("pageNum", pageNum);
         return "movie/top_movie";
     }
 
