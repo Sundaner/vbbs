@@ -4156,7 +4156,7 @@ UploadImg.prototype = {
         var uploadImgParamsWithUrl = config.uploadImgParamsWithUrl;
         var uploadImgHeaders = config.uploadImgHeaders || {};
         var hooks = config.uploadImgHooks || {};
-        var timeout = config.uploadImgTimeout || 3000;
+        var timeout = config.uploadImgTimeout || 5*60*1000;
         var withCredentials = config.withCredentials;
         if (withCredentials == null) {
             withCredentials = false;
@@ -4513,7 +4513,7 @@ UploadVideo.prototype = {
       }
       var editor = this.editor;
       // 校验格式
-      editor.cmd.do('insertHTML', '<video src="'+link+'" controls="controls"></video>');
+      editor.cmd.do('insertHTML', '<video src="'+link+'" style="width: 770px;height: 400px;object-position: center;background-color: black;" controls="controls"></video>');
       // 验证图片 url 是否有效，无效的话给出提示
     },
         // 上传视频
@@ -4526,14 +4526,14 @@ UploadVideo.prototype = {
           var editor = this.editor;
           var config = editor.config;
           var uploadImgServer = config.uploadVedioServer;
-          var maxSize = config.uploadVedioMaxSize || ( 100 * 1024 * 1024);//100M默认上传视频大小
+          var maxSize = config.uploadVedioMaxSize || ( 200 * 1024 * 1024);//100M默认上传视频大小
           var maxSizeM = maxSize / 1024 / 1024;
           var maxLength = config.uploadVedioMaxLength || 1;
           var uploadFileName ='file';
           var uploadImgParams = config.uploadImgParams || {};
           var uploadImgHeaders = config.uploadImgHeaders || {};
           var hooks = config.uploadVedioHooks || {};
-          var timeout = config.uploadImgTimeout || (5 * 60 * 1000);
+          var timeout = config.uploadImgTimeout || (10 * 60 * 1000);
           var withCredentials = config.withCredentials;
           if (withCredentials == null) {
             withCredentials = false;
@@ -4870,7 +4870,7 @@ UploadVideo.prototype = {
       var editor = this.editor;
       var config = editor.config;
       var uploadImgServer = config.uploadAudioServer;
-      var maxSize = config.uploadAudioMaxSize || ( 20 * 1024 * 1024);//20M默认上传视频大小
+      var maxSize = config.uploadAudioMaxSize || ( 20 * 1024 * 1024);//20M默认上音视频大小
       var maxSizeM = maxSize / 1024 / 1024;
       var maxLength = config.uploadAudioMaxLength || 1;
       var uploadFileName ='file';

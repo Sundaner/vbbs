@@ -96,7 +96,6 @@
     layui.use('element', function () {
         var element = layui.element;
 
-        //监听导航点击
         element.on('nav(demo)', function (elem) {
             layer.msg(elem.text());
         });
@@ -104,7 +103,7 @@
     layui.use('form', function () {
         var form = layui.form;
         var layer = layui.layer;
-        var id = location.search.slice(4);
+        var id = [[${article.invitationId}]];
         form.on('submit(formDemo)', function (data) {
             var invitation = {
                 title: $("#title").val(),
@@ -138,10 +137,11 @@
         form.render();
     });
 
+    var editor
     $(document).ready(function () {
         var E = window.wangEditor
-        var editor = new E('#edit')
-        var server = '/user/uploadImg';
+        editor = new E('#edit')
+        var server = '/user/uploadImg'
         function customInsert(insertImg, result, editor) {
             var url = result.data;
             insertImg(url);
@@ -155,7 +155,7 @@
             uploadImgShowBase64:true,
             uploadVedioServer:server,
             uploadAudioServer:server,
-            uploadImgMaxSize:3 * 1024 * 1024,
+            uploadImgMaxSize:5 * 1024 * 1024,
             uploadImgMaxLength:5,
             pasteText:false,
             pasteFilterStyle:false,
@@ -173,7 +173,6 @@
         editor.customConfig = customConfig;
         editor.create()
     })
-
 
 
 </script>

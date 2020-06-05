@@ -85,7 +85,6 @@
     layui.use('element', function () {
         var element = layui.element;
 
-        //监听导航点击
         element.on('nav(demo)', function (elem) {
             layer.msg(elem.text());
         });
@@ -142,7 +141,7 @@
         uploadImgShowBase64:true,
         uploadVedioServer:server,
         uploadAudioServer:server,
-        uploadImgMaxSize:3 * 1024 * 1024,
+        uploadImgMaxSize:5 * 1024 * 1024,
         uploadImgMaxLength:5,
         pasteText:false,
         pasteFilterStyle:false,

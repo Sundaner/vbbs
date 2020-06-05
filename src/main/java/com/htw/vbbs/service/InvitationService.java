@@ -136,8 +136,8 @@ public class InvitationService {
         zanService.zan(userId, invitationId);
         invitationMapper.zan(invitationId);
         Invitation invitation = invitationMapper.getById(invitationId);
-        if(SocketServer.hasOnline(author)){
-            String notify = "用户"+name+"给你的文章:"+ invitation.getTitle()+"点了个赞，块去看看吧！";
+        if(SocketServer.hasOnline(author) && author != userId){
+            String notify = "用户"+name+"给你的文章:"+ invitation.getTitle()+"。点了个赞，块去看看吧！";
             SocketServer.sendMessage(notify, author);
         }
         return true;
